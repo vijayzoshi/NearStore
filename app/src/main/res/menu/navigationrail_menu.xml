@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/files"
+        android:enabled="true"
+        android:icon="@drawable/baseline_access_time_filled_24"
+        android:title="Files" />
+    <item
+        android:id="@+id/images"
+        android:enabled="true"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Images" />
+    <item
+        android:id="@+id/music"
+        android:enabled="true"
+        android:icon="@drawable/baseline_location_on_24"
+        android:title="Music" />
+    <item
+        android:id="@+id/videos"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Videos" />
+</menu>

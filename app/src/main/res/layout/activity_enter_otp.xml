@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+
+    tools:context=".EnterOtpActivity"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textColor="@color/black"
+        android:fontFamily="@font/plusjakartasansextrabold"
+        android:textSize="30sp"
+        android:layout_marginBottom="16dp" />
+
+
+
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnVerifyOtp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Sign in with Google"
+        android:textSize="16sp"
+
+        android:layout_marginBottom="16dp" />
+
+
+
+</LinearLayout>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderStatusActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/baseline_arrow_back_24"
+                app:title="Store" />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/baseline_search_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/my_toolbar"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ImageView
+        android:id="@+id/store"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+
+        android:src="@drawable/shop"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="Dmart"
+        android:textColor="@color/darkgreen"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/plusjakartasansregular"
+        android:text="Dwarka"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <ImageView
+        android:id="@+id/arrow1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:layout_marginTop="10dp"
+        android:src="@drawable/line"
+        app:layout_constraintEnd_toEndOf="@+id/store"
+        app:layout_constraintStart_toStartOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@+id/store" />
+
+    <ImageView
+        android:id="@+id/arrow2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:src="@drawable/line"
+        app:layout_constraintEnd_toEndOf="@+id/store"
+        app:layout_constraintStart_toStartOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@+id/arrow1" />
+
+    <ImageView
+        android:id="@+id/arrow3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:src="@drawable/line"
+        app:layout_constraintEnd_toEndOf="@+id/store"
+        app:layout_constraintStart_toStartOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@+id/arrow2" />
+
+
+    <ImageView
+        android:id="@+id/homeicon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+
+        android:src="@drawable/home"
+        app:layout_constraintBottom_toBottomOf="@+id/homeaddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home" />
+
+    <TextView
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="My Address"
+        android:textColor="@color/darkgreen"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@id/arrow3" />
+
+    <TextView
+        android:id="@+id/homeaddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/plusjakartasansregular"
+        android:text="Rzc 148 b ..."
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/home"
+        app:layout_constraintTop_toBottomOf="@+id/home" />
+
+
+    <TextView
+        android:id="@+id/arriving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="Arriving in 30 mins"
+        android:textColor="@color/darkgreen"
+        android:textSize="22sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/home"
+        app:layout_constraintStart_toEndOf="@+id/home"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        app:dividerThickness = "1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:dividerInsetEnd="16dp"
+        app:dividerInsetStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeaddress" />
+
+    <ImageView
+        android:id="@+id/deliveryicon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="@+id/deliveryguy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_deliveryguyname" />
+
+    <TextView
+        android:id="@+id/tv_deliveryguyname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="Rakesh Sharma"
+        android:textColor="@color/darkgreen"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <TextView
+        android:id="@+id/deliveryguy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/plusjakartasansregular"
+        android:text="Delivery Guy"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_deliveryguyname"
+        app:layout_constraintTop_toBottomOf="@+id/tv_deliveryguyname" />
+
+
+    <ImageView
+        android:id="@+id/callicon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/phone"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintBottom_toBottomOf="@+id/deliveryicon"
+        app:layout_constraintTop_toTopOf="@+id/deliveryicon" />
+
+    <ImageView
+        android:id="@+id/listicon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+
+        android:src="@drawable/itemlist"
+        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemlist" />
+
+    <TextView
+        android:id="@+id/itemlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="Item List"
+        android:textColor="@color/darkgreen"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@id/deliveryguy" />
+    <ImageView
+        android:id="@+id/rightarrow"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+android:layout_marginEnd="20dp"
+        android:src="@drawable/rightarrow"
+        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemlist" />
+    <ImageView
+        android:id="@+id/rupeeicon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+
+        android:src="@drawable/rupeeindian"
+        app:layout_constraintBottom_toBottomOf="@+id/topay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topay" />
+
+    <TextView
+        android:id="@+id/topay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="To Pay : Rs 300"
+        android:textColor="@color/darkgreen"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@+id/store"
+        app:layout_constraintTop_toBottomOf="@id/itemlist" />
+</androidx.constraintlayout.widget.ConstraintLayout>

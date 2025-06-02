@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="15dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_productimage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pampp" />
+
+    <TextView
+        android:id="@+id/tv_productname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="Pampers"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/iv_productimage"
+        app:layout_constraintTop_toBottomOf="@id/iv_productimage" />
+
+    <TextView
+        android:id="@+id/tv_productquantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="1 pack"
+        app:layout_constraintStart_toStartOf="@+id/tv_productname"
+        app:layout_constraintTop_toBottomOf="@+id/tv_productname" />
+
+    <TextView
+        android:id="@+id/tv_productprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/plusjakartasansbold"
+        android:text="Rs 250"
+        android:textColor="@color/black"
+
+        app:layout_constraintStart_toStartOf="@+id/tv_productquantity"
+        app:layout_constraintTop_toBottomOf="@+id/tv_productquantity" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:backgroundTint="@color/darkgreen"
+        android:padding="0dp"
+        android:text="Add"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_productimage"
+        app:layout_constraintEnd_toEndOf="@+id/iv_productimage" />
+
+    <LinearLayout
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageButton
+            android:id="@+id/iv_plus"
+
+
+            android:background="@color/white"
+
+            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_box_24" />
+
+        <TextView
+            android:id="@+id/tv_productnumber"
+
+            android:textColor="@color/black"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="18sp"
+            />
+
+        <ImageButton
+            android:id="@+id/iv_minus"
+            android:padding="0dp"
+            android:background="@color/white"
+
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_indeterminate_check_box_24"
+            />
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
