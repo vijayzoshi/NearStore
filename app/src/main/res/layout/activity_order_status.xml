@@ -32,14 +32,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/baseline_arrow_back_24"
-                app:title="Store" />
+                app:title="Order ID"
+                app:subtitle="#112834"/>
 
-            <ImageView
-                android:id="@+id/iv_search"
+            <TextView
+                android:id="@+id/tv_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/baseline_search_24"
+
+                android:text="Help"
+                android:fontFamily="@font/plusjakartasansbold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/my_toolbar"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,125 +51,213 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <ImageView
-        android:id="@+id/store"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="16dp"
-
-        android:src="@drawable/shop"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar_layout">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/plusjakartasansbold"
-        android:text="Dmart"
-        android:textColor="@color/darkgreen"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/plusjakartasansregular"
-        android:text="Dwarka"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/arrow1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_locations"
 
-        android:layout_marginTop="10dp"
-        android:src="@drawable/line"
-        app:layout_constraintEnd_toEndOf="@+id/store"
-        app:layout_constraintStart_toStartOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@+id/store" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-    <ImageView
-        android:id="@+id/arrow2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-
-        android:src="@drawable/line"
-        app:layout_constraintEnd_toEndOf="@+id/store"
-        app:layout_constraintStart_toStartOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@+id/arrow1" />
-
-    <ImageView
-        android:id="@+id/arrow3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-
-        android:src="@drawable/line"
-        app:layout_constraintEnd_toEndOf="@+id/store"
-        app:layout_constraintStart_toStartOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@+id/arrow2" />
+                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
 
-    <ImageView
-        android:id="@+id/homeicon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="16dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        android:src="@drawable/home"
-        app:layout_constraintBottom_toBottomOf="@+id/homeaddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/home" />
+                    <FrameLayout
+                        android:id="@+id/store"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_storelocation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_storename"
+                        app:layout_constraintVertical_bias="0.823">
 
-    <TextView
-        android:id="@+id/home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/plusjakartasansbold"
-        android:text="My Address"
-        android:textColor="@color/darkgreen"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@id/arrow3" />
+                        <!-- Background Box with Curve -->
+                        <View
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/rounded_greybox" />
 
-    <TextView
-        android:id="@+id/homeaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/plusjakartasansregular"
-        android:text="Rzc 148 b ..."
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/home"
-        app:layout_constraintTop_toBottomOf="@+id/home" />
+                        <!-- Image Icon Centered -->
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
 
 
-    <TextView
-        android:id="@+id/arriving"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/plusjakartasansbold"
-        android:text="Arriving in 30 mins"
-        android:textColor="@color/darkgreen"
-        android:textSize="22sp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/home"
-        app:layout_constraintStart_toEndOf="@+id/home"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                            android:src="@drawable/shop" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/homeicon"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_myaddress"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/home"
+                        app:layout_constraintVertical_bias="0.823">
+
+                        <!-- Background Box with Curve -->
+                        <View
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/rounded_greybox" />
+
+                        <!-- Image Icon Centered -->
+                        <ImageView
+
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/home" />
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_storename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Dmart"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/store"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_storelocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Dwarka"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_storename"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_storename" />
+
+
+                    <ImageView
+                        android:id="@+id/arrow1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/line"
+                        app:layout_constraintEnd_toEndOf="@+id/store"
+                        app:layout_constraintStart_toStartOf="@+id/store"
+                        app:layout_constraintTop_toBottomOf="@+id/store" />
+
+                    <ImageView
+                        android:id="@+id/arrow2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+
+                        android:src="@drawable/line"
+                        app:layout_constraintEnd_toEndOf="@+id/store"
+                        app:layout_constraintStart_toStartOf="@+id/store"
+                        app:layout_constraintTop_toBottomOf="@+id/arrow1" />
+
+                    <ImageView
+                        android:id="@+id/arrow3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+
+                        android:src="@drawable/line"
+                        app:layout_constraintEnd_toEndOf="@+id/store"
+                        app:layout_constraintStart_toStartOf="@+id/store"
+                        app:layout_constraintTop_toBottomOf="@+id/arrow2" />
+
+
+                    <TextView
+                        android:id="@+id/home"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="My Address"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/store"
+                        app:layout_constraintTop_toBottomOf="@id/arrow3" />
+
+
+                    <TextView
+                        android:id="@+id/tv_myaddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Rzc 148 b ..."
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/home"
+                        app:layout_constraintTop_toBottomOf="@+id/home" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/lottieView"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_timing"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_timing"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/lottiedot" />
+
+                    <TextView
+                        android:id="@+id/tv_timing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+
+                        android:text="Arriving in 30 mins"
+                        android:textColor="@color/darkgreen"
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toTopOf="@+id/home"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/home"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_storelocation" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
@@ -180,110 +271,262 @@
         app:dividerInsetStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeaddress" />
-
-    <ImageView
-        android:id="@+id/deliveryicon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="16dp"
-
-        android:src="@drawable/circle"
-        app:layout_constraintBottom_toBottomOf="@+id/deliveryguy"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_deliveryguyname" />
-
-    <TextView
-        android:id="@+id/tv_deliveryguyname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/plusjakartasansbold"
-        android:text="Rakesh Sharma"
-        android:textColor="@color/darkgreen"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
-
-    <TextView
-        android:id="@+id/deliveryguy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/plusjakartasansregular"
-        android:text="Delivery Guy"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_deliveryguyname"
-        app:layout_constraintTop_toBottomOf="@+id/tv_deliveryguyname" />
+        app:layout_constraintTop_toBottomOf="@+id/cd_locations" />
 
 
-    <ImageView
-        android:id="@+id/callicon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        -->
 
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/phone"
-        app:layout_constraintEnd_toEndOf="parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_deliveryman"
 
-        app:layout_constraintBottom_toBottomOf="@+id/deliveryicon"
-        app:layout_constraintTop_toTopOf="@+id/deliveryicon" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-    <ImageView
-        android:id="@+id/listicon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="16dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_locations">
 
-        android:src="@drawable/itemlist"
-        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemlist" />
 
-    <TextView
-        android:id="@+id/itemlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/plusjakartasansbold"
-        android:text="Item List"
-        android:textColor="@color/darkgreen"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@id/deliveryguy" />
-    <ImageView
-        android:id="@+id/rightarrow"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-android:layout_marginEnd="20dp"
-        android:src="@drawable/rightarrow"
-        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemlist" />
-    <ImageView
-        android:id="@+id/rupeeicon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="16dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_deliveryguynotalot"
 
-        android:src="@drawable/rupeeindian"
-        app:layout_constraintBottom_toBottomOf="@+id/topay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/topay" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
 
-    <TextView
-        android:id="@+id/topay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/plusjakartasansbold"
-        android:text="To Pay : Rs 300"
-        android:textColor="@color/darkgreen"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/store"
-        app:layout_constraintTop_toBottomOf="@id/itemlist" />
+
+                    <ImageView
+                        android:id="@+id/deliveryicontwo"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="16dp"
+
+                        android:src="@drawable/circle"
+                        app:layout_constraintBottom_toBottomOf="@+id/info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/info" />
+
+                    <TextView
+                        android:id="@+id/info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Delivery guy will be aloted soon"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/deliveryicontwo"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/cl_deliveryguyalot"
+                    android:layout_height="match_parent">
+
+
+                    <ImageView
+                        android:id="@+id/deliveryicon"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginStart="16dp"
+
+                        android:src="@drawable/circle"
+                        app:layout_constraintBottom_toBottomOf="@+id/deliveryguy"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_deliveryguyname" />
+
+                    <TextView
+                        android:id="@+id/tv_deliveryguyname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Rakesh Sharma"
+                        android:textColor="@color/darkgreen"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/deliveryicon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/deliveryguy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Delivery Guy"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_deliveryguyname"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_deliveryguyname" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_call"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/telephone"
+                        app:layout_constraintBottom_toBottomOf="@+id/deliveryicon"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/deliveryicon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cd_detail"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="20dp"
+
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cd_deliveryman">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/listicon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/rounded_greybox"
+
+                        android:src="@drawable/itemlist"
+                        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/itemlist" />
+
+                    <TextView
+                        android:id="@+id/itemlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="45dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Item List"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/listicon"
+                        app:layout_constraintTop_toTopOf="@id/topay" />
+
+                    <TextView
+                        android:id="@+id/tv_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="view"
+                        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/itemlist" />
+
+                    <TextView
+                        android:id="@+id/tv_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="close"
+                        app:layout_constraintBottom_toBottomOf="@+id/itemlist"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/itemlist" />
+
+                    <ImageView
+                        android:id="@+id/rupeeicon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/rounded_greybox"
+
+                        android:src="@drawable/rupeeindian"
+                        app:layout_constraintBottom_toBottomOf="@+id/topay"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/topay" />
+
+                    <TextView
+                        android:id="@+id/topay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="To Pay"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/rupeeicon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_grandtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Rs 300"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/topay"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/topay" />
+
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerThickness="0.5dp"
+
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/rv_itemlist" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_itemlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/listicon"
+                        tools:listitem="@layout/rv_placedorders" />
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

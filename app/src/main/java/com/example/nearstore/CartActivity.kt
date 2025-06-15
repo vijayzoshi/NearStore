@@ -1,8 +1,11 @@
 package com.example.nearstore
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,22 +13,33 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.CartAdapter
+import com.example.nearstore.Data.OrderData
 import com.example.nearstore.Data.Product
-import com.example.nearstore.Data.ProductData
-import com.example.nearstore.Data.ProductModal
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class CartActivity : AppCompatActivity() {
-
 
 
     private lateinit var recyclerView: RecyclerView
     private val productArraylist = ArrayList<Product>()
     private lateinit var adapter: CartAdapter
+    val database = FirebaseDatabase.getInstance().getReference()
+    var itemtotal = 1
+    var grandtotal = 1
+
+    lateinit var itemtotalTv: TextView
+    lateinit var grandtotalTv : TextView
+
+    var uid = ""
+
+    lateinit var storeid: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,47 +51,185 @@ class CartActivity : AppCompatActivity() {
             insets
         }
 
-        var btn : Button = findViewById(R.id.payButton)
-        btn.setOnClickListener {
 
-            val intent : Intent = Intent(this, OrderStatusActivity::class.java)
+        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+        uid = sharedPref.getString("userid", "haha").toString()
+        var storename = ""
+        var storelocation = ""
+        var myaddress = ""
+        val storenameTv: TextView = findViewById(R.id.tv_storename)
+        val myaddressTv: TextView = findViewById(R.id.tv_myaddress)
+
+        itemtotalTv = findViewById(R.id.tv_itemtotal)
+        grandtotalTv = findViewById(R.id.tv_grandtotal)
+
+
+        storeid = intent.getStringExtra("storeid").toString()
+        Toast.makeText(this, storeid, Toast.LENGTH_LONG).show()
+
+
+        val editTv: TextView = findViewById(R.id.tv_edit)
+        editTv.setOnClickListener {
+
+
+            val bottomSheet = AddressBottomsheet()
+            bottomSheet.show(supportFragmentManager, AddressBottomsheet.TAG)
+
+        }
+
+
+
+                var deliveryfeeTv : TextView = findViewById(R.id.tv_deliveryfee)
+                deliveryfeeTv.text = "30"
+
+
+
+
+
+
+
+
+
+
+
+        database.child("stores").child(storeid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    storename = snapshot.child("storename").getValue(String::class.java).toString()
+                    storenameTv.text = storename
+                    storelocation = snapshot.child("storelocation").getValue(String::class.java).toString()
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+
+        if (uid != null) {
+            database.child("users").child(uid).child("myaddress")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+
+                        // myaddressTv.text = snapshot.getValue(String::class.java).toString()
+
+                        myaddress = snapshot.getValue(String::class.java).toString()
+                        val shortaddress = if (myaddress.length > 6) {
+                            myaddress.substring(0, 12) + "..."
+                        } else {
+                            myaddress
+                        }
+                        myaddressTv.text = shortaddress
+
+                    }
+
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+
+                    }
+                }
+
+                )
+        }
+
+
+        val itemlist = productArraylist
+
+
+        val orderid = (100000..999999).random()
+
+
+        val istZone = ZoneId.of("Asia/Kolkata")
+        val currentISTTime = ZonedDateTime.now(istZone)
+        val ordertime =
+            currentISTTime.format(DateTimeFormatter.ofPattern("dd-MMMM HH:mm a")).toString()
+        val timestamp = System.currentTimeMillis()
+
+
+
+        val confirmBtn: Button = findViewById(R.id.btn_confirm)
+        confirmBtn.setOnClickListener {
+
+            fetchStudentsFromFirebase()
+
+            var deliveryfee = 30
+            val order = OrderData(
+                storeName = storename,
+                storeLocation = storelocation,
+                orderid = orderid,
+                ordertime = ordertime,
+                itemtotal = itemtotal,
+                grandtotal = grandtotal,
+                deliveryfee = deliveryfee,
+                useraddress = myaddress,
+                itemsList = itemlist,
+                timestamp = timestamp,
+
+            )
+
+            database.child("users").child(uid.toString()).child("orders").child("orderongoing")
+                .setValue(order)
+            database.child("users").child(uid.toString()).child("orders").child("orderhistory")
+                .child(orderid.toString()).setValue(order)
+
+            database.child("users").child(uid.toString()).child("cart").removeValue()
+            val intent: Intent = Intent(this, OrderPlacedActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         recyclerView = findViewById(R.id.rv_cart1)
-        adapter = CartAdapter(productArraylist)
+        adapter = CartAdapter(this@CartActivity, productArraylist)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         fetchStudentsFromFirebase()
+        //itemtotal = productArraylist.sumOf { it.productprice }
 
-
+        //   itemtotalTv.text = itemtotal.toString()
 
 
     }
 
 
     private fun fetchStudentsFromFirebase() {
-        val dbRef =  FirebaseDatabase.getInstance().getReference("users").child("1").child("cart")
 
 
-        dbRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                productArraylist.clear()
-                for (child in snapshot.children) {
-                    val student = child.getValue(Product::class.java)
-                    student?.let { productArraylist.add(it) }
+        database.child("users").child(uid.toString()).child("cart")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    productArraylist.clear()
+
+                    for (child in snapshot.children) {
+                        val student = child.getValue(Product::class.java)
+                        student?.let {
+                            productArraylist.add(it)
+
+                            //itemtotal += it.productprice
+
+
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+
+                    itemtotal = productArraylist.sumOf { it.productprice*it.productnumber }
+
+                    itemtotalTv.text = itemtotal.toString()
+
+                    val deliverfee = 30
+
+                     grandtotal = itemtotal + deliverfee
+                    grandtotalTv.text = grandtotal.toString()
+
                 }
-                adapter.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                //Toast.makeText(this@MainActivity, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
     }
-
 
 
 }

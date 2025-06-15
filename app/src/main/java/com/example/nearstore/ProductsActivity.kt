@@ -1,10 +1,12 @@
 package com.example.nearstore
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.ProductAdapter
 import com.example.nearstore.Data.ProductModal
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,7 +29,7 @@ class ProductsActivity : AppCompatActivity() {
 
 
     private lateinit var searchIv: ImageView
-    var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("stores")
+    var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     lateinit var productRecyclerView: RecyclerView
     lateinit var productAdapter: ProductAdapter
     lateinit var productArrayList: ArrayList<ProductModal>
@@ -49,6 +52,13 @@ class ProductsActivity : AppCompatActivity() {
             insets
         }
 
+
+        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+        val uid = sharedPref.getString("userid", "haha")
+        Toast.makeText(this,uid, Toast.LENGTH_LONG).show()
+
+
+
         categorytype = intent.getStringExtra("categorytype").toString()
 
         storeid = intent.getIntExtra("storeid", 0).toString()
@@ -62,7 +72,7 @@ class ProductsActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        searchIv = findViewById(R.id.iv_search)
+        searchIv = findViewById(R.id.tv_help)
         searchIv.setOnClickListener {
             val intent: Intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
@@ -97,32 +107,13 @@ class ProductsActivity : AppCompatActivity() {
         when (categorytype) {
             "skincare" -> {
                 // Do something for apple
-                getnavigationrail(
-                    "Facewash",
-                    "Cream",
-                    "Suncreen",
-                    "Serum",
-                    "Bodylotion",
-                    R.drawable.facewash,
-                    R.drawable.facewash,
-                    R.drawable.facewash,
-                    R.drawable.facewash,
-                    R.drawable.facewash
+                getnavigationrail("Facewash", "Cream", "Suncreen", "Serum", "Bodylotion", R.drawable.facewash, R.drawable.facewash, R.drawable.facewash, R.drawable.facewash, R.drawable.facewash
                 )
             }
 
             "bathbody" -> {
                 // Do something for banana
-                getnavigationrail(
-                    "Soap",
-                    "Bodywash",
-                    "Handwash",
-                    "Powder",
-                    "Bodyscrub",
-                    R.drawable.facewash,
-                    R.drawable.facewash,
-                    R.drawable.facewash,
-                    R.drawable.facewash,
+                getnavigationrail("Soap", "Bodywash", "Handwash", "Powder", "Bodyscrub", R.drawable.facewash, R.drawable.facewash, R.drawable.facewash,R.drawable.facewash,
                     R.drawable.facewash
                 )            }
 
@@ -142,12 +133,45 @@ class ProductsActivity : AppCompatActivity() {
             }
         }
 
-    }
+
+        val extendedfab : ExtendedFloatingActionButton = findViewById(R.id.extended_fab)
+        extendedfab.hide()
+
+
+        databaseReference.child("users").child(uid.toString()).child("cart")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        extendedfab.show()
+                      val itemsadded =  snapshot.childrenCount.toString()+ " " + "items added"
+                        extendedfab.text = itemsadded
+                    }else{
+                        extendedfab.hide()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+
+
+                extendedfab.setOnClickListener {
+
+                    val intent: Intent = Intent(this, CartActivity::class.java)
+                    intent.putExtra("storeid", storeid)
+
+                    startActivity(intent)
+                }
+
+            }
+
+
 
 
     fun firebasedata(a: String) {
 
-        databaseReference.child(storeid).child(categorytype).child(a)
+        databaseReference.child("stores").child(storeid).child(categorytype).child(a)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -180,17 +204,7 @@ class ProductsActivity : AppCompatActivity() {
     }
 
 
-    fun getnavigationrail(
-        itemone: String,
-        itemtwo: String,
-        itemthree: String,
-        itemfour: String,
-        itemfive: String,
-        iconone: Int,
-        icontwo: Int,
-        iconthree: Int,
-        iconfour: Int,
-        iconfive: Int
+    fun getnavigationrail(itemone: String, itemtwo: String, itemthree: String, itemfour: String, itemfive: String, iconone: Int, icontwo: Int, iconthree: Int, iconfour: Int, iconfive: Int
     ) {
 
         // Example: Dynamic items
@@ -256,3 +270,5 @@ class ProductsActivity : AppCompatActivity() {
 
 
 }
+
+

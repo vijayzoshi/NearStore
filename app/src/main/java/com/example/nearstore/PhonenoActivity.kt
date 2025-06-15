@@ -68,12 +68,9 @@ class PhonenoActivity : AppCompatActivity() {
                 val latitude = location.latitude
                 val longitude = location.longitude
 
-                val lat2 = 28.5950292
-                val long2 = 77.0456308
 
 
-                Toast.makeText(this, calculateDistanceInKm(latitude, longitude, lat2, long2), Toast.LENGTH_SHORT).show()
-               //Toast.makeText(this, "Lat: $latitude, Lng: $longitude", Toast.LENGTH_SHORT).show()
+               Toast.makeText(this, "Lat: $latitude, Lng: $longitude", Toast.LENGTH_SHORT).show()
 
             } else {
                 Toast.makeText(this, "Location not available", Toast.LENGTH_SHORT).show()
@@ -91,25 +88,6 @@ class PhonenoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    fun calculateDistanceInKm(
-        startLat: Double, startLng: Double,
-        endLat: Double, endLng: Double
-    ): String {
-        val startLocation = Location("start").apply {
-            latitude = startLat
-            longitude = startLng
-        }
-
-        val endLocation = Location("end").apply {
-            latitude = endLat
-            longitude = endLng
-        }
-
-        val distanceInMeters = startLocation.distanceTo(endLocation)
-        val distanceInKm = distanceInMeters / 1000f
-        return String.format("%.1f", distanceInKm)
     }
 
 

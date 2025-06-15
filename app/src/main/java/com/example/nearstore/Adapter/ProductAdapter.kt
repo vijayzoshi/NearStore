@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Data.ProductData
 import com.example.nearstore.Data.ProductModal
 import com.example.nearstore.R
+import com.example.nearstore.StoreModal
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -21,7 +23,9 @@ import com.google.firebase.database.getValue
 
 class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal>) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
 
-  var  databaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("users").child("1")
+    val sharedPref = context.getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+    val uid = sharedPref.getString("userid", "haha")
+  var  databaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
 
     var onItemClick  : ((ProductModal) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -38,6 +42,11 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
         return datalist.size
     }
 
+    fun searchDataList(searchList: ArrayList<ProductModal>) {
+        datalist = searchList
+        notifyDataSetChanged()
+    }
+
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -46,6 +55,7 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
         holder.productquantityIV.text = datalist.get(position).productquantity
         holder.productpriceIV.text = datalist.get(position).productprice.toString()
 
+        holder.llIV.visibility = View.GONE
 
 
         holder.addIV.setOnClickListener {
@@ -54,6 +64,8 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
 
             val productData = ProductData(  a.productid,0,a.productprice,a.productquantity,a.productname,1)
             databaseReference.child("cart").child(datalist.get(position).productid.toString()).setValue(productData)
+            holder.addIV.visibility = View.GONE
+            holder.llIV.visibility = View.VISIBLE
 
         }
 
@@ -63,9 +75,11 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 var number =snapshot.child("cart").child(a).child("productnumber").getValue<Int>()
+
                 holder.numberIV.text = number.toString()
 
 
+                // additon
                 holder.incIV.setOnClickListener {
 
                     number = number!! + 1
@@ -74,11 +88,17 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
                 }
 
 
+                //removing
                 holder.decIV.setOnClickListener {
 
-                    if(number!! >0){
+                    if(number!! >1){
                         number = number!! -1
                         databaseReference.child("cart").child(a).child("productnumber").setValue(number)
+                    }else{
+                        holder.addIV.visibility = View.VISIBLE
+                        holder.llIV.visibility = View.GONE
+                        databaseReference.child("cart").child(a).removeValue()
+
                     }
 
 
@@ -122,6 +142,7 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
         val decIV = itemview.findViewById<ImageButton>(R.id.iv_minus)
         val numberIV = itemview.findViewById<TextView>(R.id.tv_productnumber)
         val addIV = itemview.findViewById<Button>(R.id.btn_add)
+        val llIV = itemview.findViewById<LinearLayout>(R.id.ll_buttons)
 
 
 

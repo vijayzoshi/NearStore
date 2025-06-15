@@ -1,4 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".HomeFragment">
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- My Address -->
+        <LinearLayout
+            android:id="@+id/lv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Address"
+                android:textColor="@color/darkgreen"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/plusjakartasansextrabold" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="27dp"
+                android:layout_height="29dp"
+                android:background="#FFFFFF"
+                app:srcCompat="@drawable/baseline_keyboard_arrow_down_24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Rzc 148 gali no 10.."
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:fontFamily="@font/plusjakartasansregular"
+            app:layout_constraintStart_toStartOf="@id/lv_address"
+            app:layout_constraintTop_toBottomOf="@id/lv_address" />
+
+        <!-- Search bar -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_search"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_address">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Search stores"
+                android:drawableEnd="@drawable/baseline_search_24"
+                android:drawablePadding="10dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@color/white"
+                android:fontFamily="@font/plusjakartasansregular"
+                android:focusable="false" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/stores_near_you"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#090909"
+            android:fontFamily="@font/plusjakartasansbold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cd_search" />
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_store"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/rv_stores"
+            app:layout_constraintTop_toBottomOf="@id/textView7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Shimmer Layout -->
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/rv_stores_shimmer" />
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_orderstatus"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:layout_gravity="bottom"
+>
+        <!-- Margin to position above bottom nav -->
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerThickness="0.5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_arriving"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_arriving"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottiedot" />
+
+        <TextView
+            android:id="@+id/tv_arriving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plusjakartasansextrabold"
+            android:text="Arriving in 10 min"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/lottieView"
+            app:layout_constraintTop_toTopOf="@+id/btn_view" />
+
+        <TextView
+            android:id="@+id/tv_totalbill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plusjakartasansextrabold"
+            android:text="Rs 300"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_view"
+            app:layout_constraintStart_toStartOf="@id/tv_arriving"
+            app:layout_constraintTop_toBottomOf="@id/tv_arriving" />
+
+        <Button
+            android:id="@+id/btn_view"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/darkgreen"
+            android:textSize="12sp"
+            android:text="View"
+            app:cornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:text="2 items added"
+        app:iconSize="12dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:icon="@drawable/rightarrow"
+        app:iconGravity="end"
+        app:iconTint="@color/white"
+        app:backgroundTint="@color/darkgreen"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+<!--
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -64,31 +296,39 @@
     </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:id="@+id/lv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:gravity="center"
         android:layout_marginStart="15dp"
-        android:fontFamily="@font/plusjakartasansextrabold"
-        android:text="My Address"
-        android:textColor="@color/darkgreen"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="27dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="0dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.007"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
-        app:srcCompat="@drawable/baseline_keyboard_arrow_down_24" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plusjakartasansextrabold"
+            android:text="My Address"
+            android:textColor="@color/darkgreen"
+            android:textSize="20sp"
+            android:textStyle="bold"
+        />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="27dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="0dp"
+            android:background="#FFFFFF"
+
+            app:srcCompat="@drawable/baseline_keyboard_arrow_down_24" />
+
+
+    </LinearLayout>
 
 
 
@@ -102,8 +342,8 @@
 
         android:textSize="14sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/lv_address"
+        app:layout_constraintTop_toBottomOf="@+id/lv_address" />
 
     <TextView
         android:id="@+id/textView7"
@@ -125,6 +365,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -134,3 +375,5 @@
         tools:listitem="@layout/rv_stores" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+-->

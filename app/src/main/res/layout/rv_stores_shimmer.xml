@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="@+id/shopimageid" />
 
             <TextView
-                android:id="@+id/shopdistance"
+                android:id="@+id/tv_storedistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -134,9 +134,9 @@
                 android:text="30 mins"
                 android:textColor="@color/darkgreen"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/shopdistance"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_storedistance"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/shopdistance" />
+                app:layout_constraintTop_toTopOf="@+id/tv_storedistance" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

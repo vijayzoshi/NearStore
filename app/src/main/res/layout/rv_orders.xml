@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginTop="7dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_storepic"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/dmartt"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_storeaddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_storename" />
+
+            <TextView
+                android:id="@+id/tv_storename"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:text="Dmart"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_storepic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_storelocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/plusjakartasansregular"
+
+                android:text="Palam"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_storename"
+                app:layout_constraintTop_toBottomOf="@+id/tv_storename" />
+
+            <TextView
+                android:id="@+id/tv_ordertotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:text="Rs 320"
+
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/iv_storepic"
+                app:layout_constraintTop_toBottomOf="@+id/tv_orderdatetime" />
+
+            <Button
+                android:id="@+id/btn_details"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="Details"
+                android:textColor="@color/darkgreen"
+                app:cornerRadius="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_ordertotal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_ordertotal" />
+
+            <TextView
+                android:id="@+id/tv_orderdatetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:text="Ordered placed on 12thJune, 8:00 PM"
+                app:layout_constraintStart_toStartOf="@+id/iv_storepic"
+                app:layout_constraintTop_toBottomOf="@+id/tv_storelocation" />
+
+            <TextView
+                android:id="@+id/tv_orderstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:text="Delivered"
+                android:layout_marginEnd="15dp"
+
+                android:textColor="@color/darkgreen"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_storename"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_storename" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

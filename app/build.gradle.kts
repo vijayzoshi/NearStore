@@ -21,7 +21,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    buildFeatures {
+        viewBinding = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -49,6 +51,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.gridlayout)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,6 +76,10 @@ dependencies {
     implementation ("com.google.android.gms:play-services-auth")
 
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation ("com.airbnb.android:lottie:6.1.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 
 
 

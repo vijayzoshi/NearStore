@@ -1,5 +1,6 @@
 package com.example.nearstore.Adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +18,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 
 
-class CartAdapter(private val dataList: ArrayList<Product>) : RecyclerView.Adapter<CartAdapter.MyViewHolder>() {
+class CartAdapter(val context: Context,private val dataList: List<Product>) : RecyclerView.Adapter<CartAdapter.MyViewHolder>() {
 
-
-    var  databaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("users").child("1")
-
+    val sharedPref = context.getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+    val uid = sharedPref.getString("userid", "haha")
+    var  databaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_cart, parent, false)
@@ -33,12 +34,16 @@ class CartAdapter(private val dataList: ArrayList<Product>) : RecyclerView.Adapt
             holder.productnameTV.text = data.productname
             holder.productnumberIV.text = data.productnumber.toString()
 
-        holder.productpriceIV.text = data.productprice.toString()
+            val finalprice = data.productprice*data.productnumber
+        holder.productpriceIV.text = finalprice.toString()
             holder.productquantityIV.text = data.productquantity
+
+
 
 
             databaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+
 
                     var number =snapshot.child("cart").child(data.productid.toString()).child("productnumber").getValue<Int>()
                    // holder.productnumberIV.text = number.toString()
@@ -54,9 +59,14 @@ class CartAdapter(private val dataList: ArrayList<Product>) : RecyclerView.Adapt
 
                     holder.decIV.setOnClickListener {
 
-                        if(number!! >0){
+                        if(number!! >1){
                             number = number!! -1
                             databaseReference.child("cart").child(data.productid.toString()).child("productnumber").setValue(number)
+                        }else{
+                            databaseReference.child("cart").child(data.productid.toString()).removeValue()
+
+
+
                         }
 
 

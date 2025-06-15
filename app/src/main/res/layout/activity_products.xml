@@ -42,7 +42,7 @@
                 app:title="Haircare" />
 
             <ImageView
-                android:id="@+id/iv_search"
+                android:id="@+id/tv_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -78,16 +78,34 @@
         android:id="@+id/rv_store"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/white"
         android:layout_marginStart="2dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/navigationRail"
         app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/rv_product" />
 
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extended_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:backgroundTint="@color/darkgreen"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="3 items added"
+        app:iconGravity="end"
+        android:layout_marginBottom="10dp"
+
+        app:iconSize="12dp"
+        app:iconTint="@color/white"
+        app:icon="@drawable/rightarrow"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

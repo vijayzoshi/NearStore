@@ -34,19 +34,22 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_username" />
 
 
-    <ImageView
+    <TextView
         android:id="@+id/iv_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
-        android:src="@drawable/baseline_home_24"
+        android:text="Edit"
+        android:textColor="@color/darkgreen"
+
+        android:fontFamily="@font/plusjakartasansbold"
         app:layout_constraintBottom_toBottomOf="@+id/tv_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_username" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cd_session"
+        android:id="@+id/cd_myaddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
@@ -63,26 +66,26 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="25dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
 
 
-                android:src="@drawable/baseline_home_24"
+                android:src="@drawable/home"
             />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="My Address"
                 android:textColor="#000000"
 
-                android:fontFamily="@font/plusjakartasansregular"
+                android:fontFamily="@font/plusjakartasansbold"
 
 
                 android:textSize="16sp" />
@@ -94,7 +97,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cd_faq"
+        android:id="@+id/cd_orderhistory"
         android:layout_marginTop="1dp"
         app:cardElevation="1dp"
 
@@ -102,7 +105,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cd_session">
+        app:layout_constraintTop_toBottomOf="@+id/cd_myaddress">
 
 
         <LinearLayout
@@ -111,26 +114,27 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="25dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:src="@drawable/baseline_home_24"
+                android:src="@drawable/history"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="Order History"
-                android:fontFamily="@font/plusjakartasansregular"
+                android:fontFamily="@font/plusjakartasansbold"
+
 
 
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -141,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         app:cardElevation="1dp"
-        app:layout_constraintTop_toBottomOf="@+id/cd_faq">
+        app:layout_constraintTop_toBottomOf="@+id/cd_orderhistory">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,27 +153,27 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="25dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
 
-                android:src="@drawable/baseline_home_24"
+                android:src="@drawable/question___copy"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="Help"
-                android:fontFamily="@font/plusjakartasansregular"
+                android:fontFamily="@font/plusjakartasansbold"
 
                 android:textColor="#000000"
 
-                android:textSize="20sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -194,42 +198,28 @@
             tools:layout_editor_absoluteY="418dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="25dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:src="@drawable/baseline_home_24"
-                />
+                android:src="@drawable/power_off" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="Logout"
-                android:fontFamily="@font/plusjakartasansregular"
+                android:fontFamily="@font/plusjakartasansbold"
 
                 android:textColor="#000000"
 
-                android:textSize="20sp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="version 1.2.3"
-        android:textSize="12sp"
-        android:fontFamily="@font/plusjakartasansregular"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

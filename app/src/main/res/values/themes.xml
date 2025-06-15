@@ -2,13 +2,25 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.NearStore" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorSecondary">@color/darkgreen</item>
         <item name="android:windowBackground">@color/white</item>
 
 
 
     </style>
+
+    <!--
+    <style name="TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+
+-->
 
     <style name="Theme.NearStore" parent="Base.Theme.NearStore" />
 </resources>
