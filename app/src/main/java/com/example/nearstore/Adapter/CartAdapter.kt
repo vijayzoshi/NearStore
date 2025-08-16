@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.nearstore.Data.Product
 import com.example.nearstore.R
 import com.google.firebase.database.DataSnapshot
@@ -31,11 +32,23 @@ class CartAdapter(val context: Context,private val dataList: List<Product>) : Re
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val data = dataList.get(position)
+
+
+
             holder.productnameTV.text = data.productname
+
+
+
+            val imagelink = data.productpic
+            Glide.with(context)
+                .load(imagelink)
+                .into(holder.productimageIv)
+
+
             holder.productnumberIV.text = data.productnumber.toString()
 
             val finalprice = data.productprice*data.productnumber
-        holder.productpriceIV.text = finalprice.toString()
+        holder.productpriceIV.text = "₹"+finalprice.toString()
             holder.productquantityIV.text = data.productquantity
 
 
@@ -97,7 +110,7 @@ class CartAdapter(val context: Context,private val dataList: List<Product>) : Re
         val productnameTV: TextView = itemview.findViewById(R.id.tv_productname)
         val productnumberIV = itemview.findViewById<TextView>(R.id.tv_productnumber)
        val productquantityIV = itemview.findViewById<TextView>(R.id.tv_productquantity)
-        val productiamgeIv = itemview.findViewById<ImageView>(R.id.iv_productimage)
+        val productimageIv = itemview.findViewById<ImageView>(R.id.iv_productimage)
         val productpriceIV = itemview.findViewById<TextView>(R.id.tv_productprice)
 
 

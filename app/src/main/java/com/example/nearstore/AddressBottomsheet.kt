@@ -1,11 +1,13 @@
 package com.example.nearstore
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.DataSnapshot
@@ -33,15 +35,14 @@ class AddressBottomsheet : BottomSheetDialogFragment() {
         val sharedPref = requireActivity().getSharedPreferences("userdetails", Context.MODE_PRIVATE)
         val uid = sharedPref.getString("userid", "haha")
 
-        var useraddressTf = view.findViewById<TextInputLayout>(R.id.tf_address)
-useraddressTf.editText?.setText("")
+        val useraddressTf = view.findViewById<TextView>(R.id.tf_address)
 
         database.child("users").child(uid.toString()).child("myaddress")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
 
-                    useraddressTf.editText?.setText(snapshot.getValue(String::class.java))
+                    useraddressTf.setText(snapshot.getValue(String::class.java))
 
                 }
 
@@ -56,8 +57,11 @@ useraddressTf.editText?.setText("")
         confirmBtn.setOnClickListener {
 
 
-            database.child("users").child(uid.toString()).child("myaddress").setValue(useraddressTf.editText?.text.toString())
+           // database.child("users").child(uid.toString()).child("myaddress").setValue(useraddressTf.editText?.text.toString())
+            val intent = Intent(requireContext(), EditAddressActivity::class.java)
+            intent.putExtra("source", "bottomsheet")
 
+            startActivity(intent)
             dismiss()
         }
 

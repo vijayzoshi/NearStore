@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.nearstore.Data.OrderModal
 import com.example.nearstore.Data.Product
 import com.example.nearstore.Data.ProductModal
@@ -49,11 +50,27 @@ class OrderAdapter(val context: Context,  var dataList: ArrayList<OrderModal>) :
         holder.storenameTV.text = data.storeName
      //   holder.storelocationIV.text = data.storelocation
 
-        holder.orderstatusIV.text = data.orderstatus
+
+        if(data.orderstatus == "delivered"){
+            holder.cancelledTv.visibility = View.GONE
+        }else{
+
+            holder.completedTv.visibility = View.GONE
+
+        }
         holder.orderdatetimeIV.text = data.ordertime
-        holder.ordertotalIV.text = data.grandtotal.toString()
+        holder.ordertotalIV.text = "₹" +  data.grandtotal.toString()
         holder.storenameTV.text = data.storeName
         holder.storelocationIV.text = data.storeLocation
+
+
+
+
+        val imagelink = data.storeimage
+        Glide.with(context)
+            .load(imagelink)
+            .into(holder.storepicIV)
+
 
 
 
@@ -75,7 +92,10 @@ class OrderAdapter(val context: Context,  var dataList: ArrayList<OrderModal>) :
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         val storenameTV: TextView = itemview.findViewById(R.id.tv_storename)
         val storelocationIV = itemview.findViewById<TextView>(R.id.tv_storelocation)
-        val orderstatusIV = itemview.findViewById<TextView>(R.id.tv_orderstatus)
+        val storepicIV = itemview.findViewById<ImageView>(R.id.iv_storepic)
+        val cancelledTv = itemview.findViewById<TextView>(R.id.tv_cancelled)
+        val completedTv = itemview.findViewById<TextView>(R.id.tv_delivered)
+
         val orderdatetimeIV = itemview.findViewById<TextView>(R.id.tv_orderdatetime)
         val ordertotalIV = itemview.findViewById<TextView>(R.id.tv_ordertotal)
 

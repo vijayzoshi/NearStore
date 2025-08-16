@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     tools:context=".StoreActivity">
 
@@ -15,11 +15,10 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
+            android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -41,7 +40,7 @@
                     app:title="Store" />
 
                 <ImageView
-                    android:id="@+id/tv_help"
+                    android:id="@+id/iv_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -54,36 +53,53 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
+    <androidx.core.widget.NestedScrollView
+    android:id="@+id/nestedScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+        android:paddingBottom="100dp"
+
+    android:layout_below="@id/my_toolbar"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:clipToPadding="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_storeinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="15dp"
+        app:cardElevation="1dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_layout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_storeimage"
-                android:layout_width="100dp"
+                android:layout_width="60dp"
 
-                android:layout_height="100dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="25dp"
 
                 android:src="@drawable/dmartt"
-                app:layout_constraintBottom_toBottomOf="parent"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/tv_storename"
@@ -93,65 +109,89 @@
                 android:fontFamily="@font/plusjakartasansbold"
 
                 android:text="D Mart"
-                android:textColor="#090909"
-                android:textSize="25sp"
+                android:textColor="@color/darkgreen"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/iv_storeimage"
                 app:layout_constraintTop_toTopOf="@+id/iv_storeimage" />
 
-            <ImageView
-                android:id="@+id/iv_storelocation"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_storename"
-                app:layout_constraintTop_toBottomOf="@+id/tv_storename"
-                app:srcCompat="@drawable/baseline_location_on_24" />
 
-            <ImageView
-                android:id="@+id/iv_storetiming"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@+id/iv_storelocation"
-                app:layout_constraintTop_toBottomOf="@+id/iv_storelocation"
-                app:srcCompat="@drawable/baseline_access_time_filled_24" />
+
+
 
 
             <TextView
                 android:id="@+id/tv_storelocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/plusjakartasansregular"
+                android:layout_marginTop="2dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_storename"
+                app:layout_constraintTop_toBottomOf="@+id/tv_storename"                android:fontFamily="@font/plusjakartasansregular"
                 android:text="Dwarka"
                 android:textColor="#090909"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_storelocation"
-                app:layout_constraintStart_toEndOf="@+id/iv_storelocation"
-                app:layout_constraintTop_toTopOf="@+id/iv_storelocation" />
+                android:textSize="12sp"
+     />
 
+            <ImageView
+                android:id="@+id/iv_storetiming"
+                android:layout_width="14dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/iv_storeimage"
+                app:layout_constraintTop_toBottomOf="@+id/iv_storeimage"
+                app:srcCompat="@drawable/cloc" />
 
             <TextView
                 android:id="@+id/tv_storetiming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/plusjakartasansregular"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/plusjakartasansbold"
                 android:text="10;00 am - 11:00 pm"
-                android:textColor="#090909"
+                android:textColor="@color/darkgreen"
+                android:textSize="13sp"
 
-                android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_storetiming"
                 app:layout_constraintStart_toEndOf="@+id/iv_storetiming"
-                app:layout_constraintTop_toTopOf="@+id/iv_storetiming" />
+                app:layout_constraintTop_toTopOf="@+id/iv_storetiming"
+               />
+            <ImageView
+                android:id="@+id/iv_energy"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/energy"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_deliverytime"
+                app:layout_constraintEnd_toStartOf="@+id/tv_deliverytime"
+                app:layout_constraintTop_toTopOf="@+id/tv_deliverytime" />
+
+            <TextView
+
+                android:id="@+id/tv_deliverytime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:gravity="end"
+
+                android:fontFamily="@font/plusjakartasansextrabold"
+                android:text="30 mins"
+                android:textColor="@color/darkgreen"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_storetiming"
+                app:layout_constraintEnd_toEndOf="parent"
+               />
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="12dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_storename"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,9 +199,9 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_ratings"
                     app:layout_constraintEnd_toStartOf="@+id/tv_ratings"
@@ -174,10 +214,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="16dp"
-                    android:text="4.4"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/plusjakartasansbold"
+                    android:text="4.4(1.4k)"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/tv_designation"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_expertname" />
@@ -199,13 +239,251 @@
         android:fontFamily="@font/plusjakartasansbold"
         android:text="@string/categories"
         android:textColor="#090909"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/cv_storeinfo"
         app:layout_constraintTop_toBottomOf="@+id/cv_storeinfo" />
 
 
+        <TextView
+            android:id="@+id/tv_grocery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:text="Grocery &amp; Kitchen"
+            android:textColor="#090909"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_categories"
+            app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:constraint_referenced_ids="lv_groceryone,lv_grocerytwo,lv_grocerythree,lv_groceryfour"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_grocery" />
+
+
+
+        <LinearLayout
+            android:id="@+id/lv_groceryone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/aata" />
+
+            <TextView
+                android:id="@+id/tv_anxiety"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+
+                android:layout_marginTop="10dp"
+                android:text="Aata, Rice &amp; \nDal"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_grocerytwo"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/oil" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Oil &amp; Ghee \n"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+             />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_grocerythree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:src="@drawable/masala" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+                android:text="Masala \n"
+      />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_groceryfour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/tea" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+                android:text="Tea &amp; Coffee \n"
+             />
+
+
+        </LinearLayout>
+
+
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:constraint_referenced_ids="lv_groceryfive,lv_grocerysix,lv_groceryseven,lv_groceryeight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flow1" />
+
+
+
+        <LinearLayout
+            android:id="@+id/lv_groceryfive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:src="@drawable/biscuits" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+                android:layout_marginTop="10dp"
+                android:text="Biscuits &amp;  \n  Cakes"
+         />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_grocerysix"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/sauces" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Sauces &amp; \n Spreads"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+           />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_groceryseven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:src="@drawable/breakfast" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+                android:text="Cereals &amp;  \n  Breakfast"
+          />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_groceryeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/dairy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:textSize="12sp"
+                android:text="Dairy &amp; Breads  \n "
+          />
+
+
+        </LinearLayout>
 
     <TextView
         android:id="@+id/tv_beautyandpersonalcare"
@@ -215,16 +493,17 @@
         android:text="@string/beauty_personal_care"
         android:textColor="#090909"
         android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_categories"
-        app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
+        app:layout_constraintTop_toBottomOf="@+id/flow4" />
+
     <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow1"
+        android:id="@+id/flow5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:constraint_referenced_ids="lv_one,lv_two,lv_three,lv_four"
+        app:constraint_referenced_ids="lv_bpcone,lv_bpctwo,lv_bpcthree,lv_bpcfour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_beautyandpersonalcare" />
@@ -232,7 +511,7 @@
 
 
     <LinearLayout
-        android:id="@+id/lv_one"
+        android:id="@+id/lv_bpcone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -240,22 +519,23 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:src="@drawable/bath" />
+            android:src="@drawable/baths" />
 
         <TextView
-            android:id="@+id/tv_anxiety"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"
             android:layout_marginTop="10dp"
             android:text="Bath &amp; Body"
-            android:textColor="@color/black" />
+           />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lv_two"
+        android:id="@+id/lv_bpctwo"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
@@ -264,7 +544,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/skincare" />
+            android:src="@drawable/skins" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -272,13 +552,15 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Skincare"
-            android:textColor="@color/black" />
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"
+         />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lv_three"
+        android:id="@+id/lv_bpcthree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -287,22 +569,23 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
 
-            android:src="@drawable/haircare" />
+            android:src="@drawable/hairs" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"
             android:text="Haircare"
-            android:textColor="@color/black" />
+      />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lv_four"
+        android:id="@+id/lv_bpcfour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -311,22 +594,34 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/oralcare" />
+            android:src="@drawable/orals" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"
             android:text="Oral Care"
-            android:textColor="@color/black" />
+      />
 
 
     </LinearLayout>
 
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:constraint_referenced_ids="lv_bpcfive,lv_bpcsix,lv_bpcseven,lv_bpceight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flow5" />
+
     <LinearLayout
-        android:id="@+id/lv_five"
+        android:id="@+id/lv_bpcfive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -334,7 +629,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/makeup" />
+            android:src="@drawable/makeups" />
 
         <TextView
             android:id="@+id/tv_makeup"
@@ -343,13 +638,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Makeup"
-            android:textColor="@color/black" />
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lv_six"
+        android:id="@+id/lv_bpcsix"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
@@ -358,7 +654,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/babycare" />
+            android:src="@drawable/babys" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -366,13 +662,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Baby Care"
-            android:textColor="@color/black" />
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"/>
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lv_seven"
+        android:id="@+id/lv_bpcseven"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -381,7 +678,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
 
-            android:src="@drawable/grooming" />
+            android:src="@drawable/groomings" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -390,13 +687,14 @@
             android:layout_marginTop="10dp"
 
             android:text="Grooming"
-            android:textColor="@color/black" />
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lv_eight"
+        android:id="@+id/lv_bpceight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -405,7 +703,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/fragnence" />
+            android:src="@drawable/fragnences" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -414,22 +712,14 @@
             android:layout_marginTop="10dp"
 
             android:text="Fragrances"
-            android:textColor="@color/black" />
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"/>
 
 
     </LinearLayout>
 
 
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:constraint_referenced_ids="lv_five,lv_six,lv_seven,lv_eight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flow1" />
 
 
     <TextView
@@ -437,14 +727,234 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/plusjakartasansbold"
-        android:text="Snacks"
+        android:text="Snacks &amp; Drinks"
         android:textColor="#090909"
         android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flow2" />
 
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:constraint_referenced_ids="lv_snacks1,lv_snacks2,lv_snacks3,lv_snacks4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Snacks" />
+
+
+
+    <LinearLayout
+        android:id="@+id/lv_snacks1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/colddrinks" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp"
+            android:text="Cold drinks &amp; \n Juices"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lv_snacks2"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/icecream" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Ice Cream &amp; \n Deserts"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lv_snacks3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+
+            android:src="@drawable/chips" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+
+            android:text="Chips &amp; \n Namkeens"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lv_snacks4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/choclates" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+
+            android:text="Choclates \n"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:constraint_referenced_ids="lv_snacks5,lv_snacks6,lv_snacksseven,lv_snackseight"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flow3" />
+
+    <LinearLayout
+        android:id="@+id/lv_snacks5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/colddrinks" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Cold drinks &amp; \n Juices"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lv_snacks6"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/icecream" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Ice Cream &amp; \n Deserts"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_snacksseven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/colddrinks" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Cold drinks &amp; \n Juices"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_snackseight"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/icecream" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Ice Cream &amp; \n Deserts"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

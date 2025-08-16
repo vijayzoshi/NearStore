@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.CartAdapter
 import com.example.nearstore.Data.OrderData
 import com.example.nearstore.Data.Product
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -52,12 +53,20 @@ class CartActivity : AppCompatActivity() {
         }
 
 
+        val myToolbar: MaterialToolbar = findViewById(R.id.my_toolbar)
+        myToolbar.title = "Session ID"
+        myToolbar.setNavigationOnClickListener {
+            finish()
+        }
+        setSupportActionBar(myToolbar)
+
+
         val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
         uid = sharedPref.getString("userid", "haha").toString()
         var storename = ""
+        var storepic = ""
         var storelocation = ""
         var myaddress = ""
-        val storenameTv: TextView = findViewById(R.id.tv_storename)
         val myaddressTv: TextView = findViewById(R.id.tv_myaddress)
 
         itemtotalTv = findViewById(R.id.tv_itemtotal)
@@ -65,22 +74,25 @@ class CartActivity : AppCompatActivity() {
 
 
         storeid = intent.getStringExtra("storeid").toString()
-        Toast.makeText(this, storeid, Toast.LENGTH_LONG).show()
 
 
         val editTv: TextView = findViewById(R.id.tv_edit)
         editTv.setOnClickListener {
 
+            val intent = Intent(this, EditAddressActivity::class.java)
+            intent.putExtra("cart", "address")
 
-            val bottomSheet = AddressBottomsheet()
-            bottomSheet.show(supportFragmentManager, AddressBottomsheet.TAG)
+            startActivity(intent)
+
+           // val bottomSheet = AddressBottomsheet()
+           // bottomSheet.show(supportFragmentManager, AddressBottomsheet.TAG)
 
         }
 
 
 
                 var deliveryfeeTv : TextView = findViewById(R.id.tv_deliveryfee)
-                deliveryfeeTv.text = "30"
+                deliveryfeeTv.text = "₹"+"30"
 
 
 
@@ -96,8 +108,10 @@ class CartActivity : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     storename = snapshot.child("storename").getValue(String::class.java).toString()
-                    storenameTv.text = storename
+                    myToolbar.title = storename
                     storelocation = snapshot.child("storelocation").getValue(String::class.java).toString()
+                    storepic = snapshot.child("storeimage").getValue(String::class.java).toString()
+
 
                 }
 
@@ -115,8 +129,8 @@ class CartActivity : AppCompatActivity() {
                         // myaddressTv.text = snapshot.getValue(String::class.java).toString()
 
                         myaddress = snapshot.getValue(String::class.java).toString()
-                        val shortaddress = if (myaddress.length > 6) {
-                            myaddress.substring(0, 12) + "..."
+                        val shortaddress = if (myaddress.length > 20) {
+                            myaddress.substring(0, 20) + "..."
                         } else {
                             myaddress
                         }
@@ -143,8 +157,9 @@ class CartActivity : AppCompatActivity() {
 
         val istZone = ZoneId.of("Asia/Kolkata")
         val currentISTTime = ZonedDateTime.now(istZone)
-        val ordertime =
-            currentISTTime.format(DateTimeFormatter.ofPattern("dd-MMMM HH:mm a")).toString()
+        val ordertime = currentISTTime.format(DateTimeFormatter.ofPattern("dd MMM, hh:mm a")).toString()
+
+
         val timestamp = System.currentTimeMillis()
 
 
@@ -152,13 +167,13 @@ class CartActivity : AppCompatActivity() {
         val confirmBtn: Button = findViewById(R.id.btn_confirm)
         confirmBtn.setOnClickListener {
 
-            fetchStudentsFromFirebase()
 
-            var deliveryfee = 30
+            val deliveryfee = 30
             val order = OrderData(
                 storeName = storename,
                 storeLocation = storelocation,
                 orderid = orderid,
+                storeimage = storepic,
                 ordertime = ordertime,
                 itemtotal = itemtotal,
                 grandtotal = grandtotal,
@@ -174,10 +189,10 @@ class CartActivity : AppCompatActivity() {
             database.child("users").child(uid.toString()).child("orders").child("orderhistory")
                 .child(orderid.toString()).setValue(order)
 
-            database.child("users").child(uid.toString()).child("cart").removeValue()
             val intent: Intent = Intent(this, OrderPlacedActivity::class.java)
             startActivity(intent)
             finish()
+
         }
 
         recyclerView = findViewById(R.id.rv_cart1)
@@ -217,12 +232,12 @@ class CartActivity : AppCompatActivity() {
 
                     itemtotal = productArraylist.sumOf { it.productprice*it.productnumber }
 
-                    itemtotalTv.text = itemtotal.toString()
+                    itemtotalTv.text ="₹"+ itemtotal.toString()
 
                     val deliverfee = 30
 
                      grandtotal = itemtotal + deliverfee
-                    grandtotalTv.text = grandtotal.toString()
+                    grandtotalTv.text = "₹"+ grandtotal.toString()
 
                 }
 

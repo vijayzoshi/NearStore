@@ -36,53 +36,74 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cd_address"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="60dp"
-
-        android:padding="20dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
-        >
-        <TextView
-
-            android:id="@+id/tv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:fontFamily="@font/plusjakartasansbold"
-
-            android:text="Palam"
-            android:textSize="18sp"
-            android:minLines="3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar_layout"/>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <TextView
-        android:id="@+id/tv_edit"
-
-
-        android:layout_width="wrap_content"
+    <!-- Card for Address -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/address_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/plusjakartasansbold"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <LinearLayout
+            android:id="@id/lv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp">
+
+            <FrameLayout
+                android:id="@+id/store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- Background Box with Curve -->
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_greybox" />
+
+                <!-- Image Icon Centered -->
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/shop" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/plusjakartasansbold"
+                android:text="Palam"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Edit Button -->
+    <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12sp"
+        android:fontFamily="@font/plusjakartasansbold"
         android:text="Edit"
         android:textColor="@color/darkgreen"
-        app:layout_constraintStart_toStartOf="@+id/cd_address"
-        app:layout_constraintTop_toBottomOf="@+id/cd_address" />
+        app:layout_constraintStart_toStartOf="@+id/address_card"
+        app:layout_constraintTop_toBottomOf="@+id/address_card" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

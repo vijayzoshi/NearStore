@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
 
@@ -15,10 +14,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="16dp"
+        android:padding="24dp"
+
         android:fontFamily="@font/plusjakartasansextrabold"
-        android:text="Order from your near stores."
+        android:text="Order from your near by supermarkets."
         android:textColor="@color/darkgreen"
-        android:textSize="40sp" />
+        android:textSize="35sp" />
+
 
 
 
@@ -29,11 +31,10 @@
         android:layout_height="56dp"
         android:text="Sign in with Google"
         android:textSize="16sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
 
         android:layout_marginTop="100dp" />
-
 
 
 </LinearLayout>

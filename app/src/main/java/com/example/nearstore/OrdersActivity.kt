@@ -27,7 +27,7 @@ class OrdersActivity : AppCompatActivity() {
      lateinit var recyclerView: RecyclerView
      var orderArraylist = ArrayList<OrderModal>()
      lateinit var adapter: OrderAdapter
-    val dbRef =  FirebaseDatabase.getInstance().getReference("users").child("UeRS0MpHslWBDZEbqnPK2eT25K72").child("orders").child("orderhistory")
+    val dbRef =  FirebaseDatabase.getInstance().getReference("users")
 
 
      lateinit var uid: String
@@ -55,13 +55,12 @@ class OrdersActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         fetchStudentsFromFirebase()
-      //  filter()
     }
 
     private fun fetchStudentsFromFirebase() {
 
 
-        dbRef.addValueEventListener(object : ValueEventListener {
+        dbRef.child(uid).child("orders").child("orderhistory").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 orderArraylist.clear()
                 for (child in snapshot.children) {

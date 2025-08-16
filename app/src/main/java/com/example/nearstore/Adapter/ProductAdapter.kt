@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.nearstore.Data.ProductData
 import com.example.nearstore.Data.ProductModal
 import com.example.nearstore.R
@@ -53,19 +54,29 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
 
         holder.productnameIV.text = datalist.get(position).productname
         holder.productquantityIV.text = datalist.get(position).productquantity
-        holder.productpriceIV.text = datalist.get(position).productprice.toString()
+        holder.productpriceIV.text = "₹" +datalist.get(position).productprice.toString()
+
+
 
         holder.llIV.visibility = View.GONE
+
+
+        val imagelink = datalist.get(position).productpic
+        Glide.with(context)
+            .load(imagelink)
+            .into(holder.productimageIv)
 
 
         holder.addIV.setOnClickListener {
 
             val a = datalist.get(position)
 
-            val productData = ProductData(  a.productid,0,a.productprice,a.productquantity,a.productname,1)
+            val productData = ProductData(  a.productid,a.productpic,a.productprice,a.productquantity,a.productname,1)
             databaseReference.child("cart").child(datalist.get(position).productid.toString()).setValue(productData)
             holder.addIV.visibility = View.GONE
             holder.llIV.visibility = View.VISIBLE
+
+            holder.numberIV.text = "1"
 
         }
 
@@ -135,7 +146,7 @@ class ProductAdapter(val context: Context, var datalist : ArrayList<ProductModal
     class MyViewHolder(itemview : View ) : RecyclerView.ViewHolder(itemview){
         val productnameIV = itemview.findViewById<TextView>(R.id.tv_productname)
         val productquantityIV = itemview.findViewById<TextView>(R.id.tv_productquantity)
-        val productiamgeIv = itemview.findViewById<ImageView>(R.id.iv_productimage)
+        val productimageIv = itemview.findViewById<ImageView>(R.id.iv_productimage)
         val productpriceIV = itemview.findViewById<TextView>(R.id.tv_productprice)
 
         val incIV = itemview.findViewById<ImageButton>(R.id.iv_plus)

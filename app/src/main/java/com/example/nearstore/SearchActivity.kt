@@ -51,15 +51,6 @@ class SearchActivity : AppCompatActivity() {
         storeRecyclerView.layoutManager = LinearLayoutManager(this@SearchActivity)
         databaseReference = FirebaseDatabase.getInstance().getReference("stores")
         storeAapter = StoreAdapter(this@SearchActivity, storeArrayList)
-
-        getFirebaseData()
-
-
-
-    //    shimmerFrameLayout = findViewById(R.id.shimmerLayout)
-        storeRecyclerView.visibility = View.GONE
-     //   shimmerFrameLayout.startShimmer()
-     //   shimmerFrameLayout.visibility = View.VISIBLE
         storeRecyclerView.adapter = storeAapter
 
 
@@ -72,8 +63,14 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
+
+                if (!newText.isNullOrEmpty()) {
+                    getFirebaseData()
+
                     search(newText)
+                }else{
+                    storeRecyclerView.visibility = View.GONE
+
                 }
                 return true
             }
@@ -83,8 +80,23 @@ class SearchActivity : AppCompatActivity() {
 
 
     }
+
+
+
     fun search(word: String) {
+
+        if (word.isEmpty()) {
+            // If search box is empty, show no data
+            storeRecyclerView.visibility = View.GONE
+
+        }else{
+            storeRecyclerView.visibility = View.VISIBLE
+
+        }
+
         val searchList = ArrayList<StoreModal>()
+
+
         for (x in storeArrayList) {
             if (x.storename.lowercase().contains(word.lowercase(Locale.getDefault()))
             ) {
@@ -94,6 +106,7 @@ class SearchActivity : AppCompatActivity() {
 
         storeAapter.searchDataList(searchList)
 
+/*
         if (storeSv.query.isEmpty()) {
             storeRecyclerView.visibility = View.GONE
         } else {
@@ -101,6 +114,8 @@ class SearchActivity : AppCompatActivity() {
 
         }
 
+
+ */
 
     }
 
@@ -125,9 +140,10 @@ class SearchActivity : AppCompatActivity() {
                     storeRecyclerView.visibility = View.VISIBLE
 
 
-                    storeAapter.onItemClick = {
+                    storeAapter.onItemClick = { store, time ->
                         val intent = Intent(this@SearchActivity, StoreActivity::class.java)
-                        intent.putExtra("storeid", it.storeid)
+                        intent.putExtra("storeid", store.storeid)
+                        intent.putExtra("deliverytime", time)
                         startActivity(intent)
                     }
                 }

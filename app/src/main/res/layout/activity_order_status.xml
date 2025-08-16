@@ -15,39 +15,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/my_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:minHeight="?attr/actionBarSize"
 
 
-                app:layout_constraintEnd_toEndOf="parent"
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/baseline_arrow_back_24"
-                app:title="Order ID"
-                app:subtitle="#112834"/>
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="Order ID : 112834">
 
-            <TextView
-                android:id="@+id/tv_help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
 
-                android:text="Help"
-                android:fontFamily="@font/plusjakartasansbold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/my_toolbar"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+        <TextView
+            android:id="@+id/tv_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textStyle="bold"
+            />
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -99,14 +96,14 @@
 
                         <!-- Background Box with Curve -->
                         <View
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:background="@drawable/rounded_greybox" />
 
                         <!-- Image Icon Centered -->
                         <ImageView
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
 
 
@@ -126,15 +123,15 @@
 
                         <!-- Background Box with Curve -->
                         <View
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:background="@drawable/rounded_greybox" />
 
                         <!-- Image Icon Centered -->
                         <ImageView
 
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@drawable/home" />
                     </FrameLayout>
@@ -144,12 +141,12 @@
                         android:id="@+id/tv_storename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="Dmart"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         app:layout_constraintStart_toEndOf="@+id/store"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -159,7 +156,7 @@
                         android:layout_height="wrap_content"
 
 
-                        android:fontFamily="@font/plusjakartasansbold"
+                        android:fontFamily="@font/plusjakartasansregular"
                         android:text="Dwarka"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="@+id/tv_storename"
@@ -203,26 +200,30 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="15dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="My Address"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         app:layout_constraintStart_toEndOf="@+id/store"
                         app:layout_constraintTop_toBottomOf="@id/arrow3" />
 
 
                     <TextView
                         android:id="@+id/tv_myaddress"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
 
                         android:layout_marginTop="2dp"
+
                         android:layout_marginBottom="20dp"
-                        android:fontFamily="@font/plusjakartasansbold"
+                        android:fontFamily="@font/plusjakartasansregular"
+                        android:layout_marginEnd="10dp"
                         android:text="Rzc 148 b ..."
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/home"
                         app:layout_constraintTop_toBottomOf="@+id/home" />
 
@@ -242,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="10dp"
                         android:fontFamily="@font/plusjakartasansbold"
 
                         android:text="Arriving in 30 mins"
@@ -257,30 +258,12 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!--
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        app:dividerThickness = "1dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:dividerInsetEnd="16dp"
-        app:dividerInsetStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cd_locations" />
-
-
-        -->
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cd_deliveryman"
 
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
 
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
@@ -293,28 +276,62 @@
                     android:id="@+id/cl_deliveryguynotalot"
 
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
 
                     <ImageView
                         android:id="@+id/deliveryicontwo"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginStart="16dp"
 
-                        android:src="@drawable/circle"
+                        android:src="@drawable/del"
                         app:layout_constraintBottom_toBottomOf="@+id/info"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/info" />
 
                     <TextView
+                        android:id="@+id/tv_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="16dp"
+
+                        android:textSize="12sp"
+                        android:text="Cancel"
+                        android:textColor="#FA7070"
+                        android:fontFamily="@font/plusjakartasansbold"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/info"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/info" />
+
+
+                <TextView
+                    android:id="@+id/info"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plusjakartasansbold"
+                    android:text="Delivery guy will be aloted soon"
+                    android:textSize="14sp"
+                    android:textColor="@color/darkgreen"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="15dp"
+
+                    app:layout_constraintStart_toEndOf="@+id/deliveryicontwo"
+
+                    android:layout_marginTop="16dp"
+
+                    />
+
+                    <!--
+                    <TextView
                         android:id="@+id/info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="Delivery guy will be aloted soon"
                         android:textSize="15sp"
@@ -322,69 +339,85 @@
                         app:layout_constraintStart_toEndOf="@+id/deliveryicontwo"
                         app:layout_constraintTop_toTopOf="parent" />
 
+-->
 
-
-
+                    <TextView
+                        android:id="@+id/cancelnfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/plusjakartasansregular"
+                        android:text="Order can be cancel only before the pickup."
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/deliveryicontwo"
+                        app:layout_constraintTop_toBottomOf="@id/info" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:id="@+id/cl_deliveryguyalot"
-                    android:layout_height="match_parent">
+                        android:id="@+id/cl_deliveryguyalot"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                       >
 
 
-                    <ImageView
-                        android:id="@+id/deliveryicon"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_marginStart="16dp"
+                        <ImageView
+                            android:id="@+id/deliveryicon"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginStart="16dp"
 
-                        android:src="@drawable/circle"
-                        app:layout_constraintBottom_toBottomOf="@+id/deliveryguy"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_deliveryguyname" />
+                            android:src="@drawable/del"
+                            app:layout_constraintBottom_toBottomOf="@+id/deliveryguy"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tv_deliveryguyname" />
 
-                    <TextView
-                        android:id="@+id/tv_deliveryguyname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="15dp"
-                        android:fontFamily="@font/plusjakartasansbold"
-                        android:text="Rakesh Sharma"
-                        android:textColor="@color/darkgreen"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toEndOf="@+id/deliveryicon"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/tv_deliveryguyname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/plusjakartasansbold"
+                            android:text="Rakesh Sharma"
+                            android:textColor="@color/darkgreen"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toEndOf="@+id/deliveryicon"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/deliveryguy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        <TextView
+                            android:id="@+id/deliveryguy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="15dp"
-                        android:fontFamily="@font/plusjakartasansbold"
-                        android:text="Delivery Guy"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_deliveryguyname"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_deliveryguyname" />
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="@font/plusjakartasansbold"
+                            android:text="Delivery Guy"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_deliveryguyname"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_deliveryguyname" />
 
 
-                    <ImageView
-                        android:id="@+id/iv_call"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        <ImageView
+                            android:id="@+id/iv_call"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
 
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/telephone"
-                        app:layout_constraintBottom_toBottomOf="@+id/deliveryicon"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/telephone"
+                            app:layout_constraintBottom_toBottomOf="@+id/deliveryicon"
 
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/deliveryicon" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/deliveryicon" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -396,9 +429,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:paddingBottom="20dp"
-                android:layout_margin="10dp"
-                android:layout_marginBottom="20dp"
+                android:paddingBottom="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+
+                android:layout_marginEnd="10dp"
+
+                android:layout_marginBottom="120dp"
 
                 android:backgroundTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -408,32 +445,20 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp">
 
                     <ImageView
                         android:id="@+id/listicon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
                         android:layout_marginStart="16dp"
-                        android:background="@drawable/rounded_greybox"
 
                         android:src="@drawable/itemlist"
                         app:layout_constraintBottom_toBottomOf="@+id/itemlist"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/itemlist" />
 
-                    <TextView
-                        android:id="@+id/itemlist"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="45dp"
-                        android:fontFamily="@font/plusjakartasansbold"
-                        android:text="Item List"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toEndOf="@+id/listicon"
-                        app:layout_constraintTop_toTopOf="@id/topay" />
 
                     <TextView
                         android:id="@+id/tv_view"
@@ -442,6 +467,8 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="view"
+                        android:textColor="@color/black"
+
                         app:layout_constraintBottom_toBottomOf="@+id/itemlist"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/itemlist" />
@@ -453,16 +480,17 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="close"
+                        android:textColor="@color/black"
+
                         app:layout_constraintBottom_toBottomOf="@+id/itemlist"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/itemlist" />
 
                     <ImageView
                         android:id="@+id/rupeeicon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
                         android:layout_marginStart="16dp"
-                        android:background="@drawable/rounded_greybox"
 
                         android:src="@drawable/rupeeindian"
                         app:layout_constraintBottom_toBottomOf="@+id/topay"
@@ -474,11 +502,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="To Pay"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         app:layout_constraintStart_toEndOf="@+id/rupeeicon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -489,37 +517,48 @@
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/plusjakartasansbold"
                         android:text="Rs 300"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="@+id/topay"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/topay" />
 
+                    <TextView
+                        android:id="@+id/itemlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="0dp"
+                        android:fontFamily="@font/plusjakartasansbold"
+                        android:text="Item List"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@+id/listicon"
+                        app:layout_constraintTop_toBottomOf="@id/topay" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/divider"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:dividerThickness="0.5dp"
+                        android:layout_marginStart="16dp"
 
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        app:dividerThickness="0.5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/rv_itemlist" />
+                        app:layout_constraintTop_toBottomOf="@id/itemlist" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_itemlist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/listicon"
+                        app:layout_constraintTop_toBottomOf="@+id/divider"
                         tools:listitem="@layout/rv_placedorders" />
-
-
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

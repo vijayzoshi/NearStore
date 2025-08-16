@@ -89,26 +89,33 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
+
                     val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
                     val editor = sharedPref.edit()
                     editor.putString("userid", user?.uid)
 
                     editor.apply()
 
-                    // Save user data to SharedPreferences
-                 /*   val sharedPreferences = getSharedPreferences("userdetails", MODE_PRIVATE)
-                    with(sharedPreferences.edit()) {
-                        putString("userid", user?.uid)
 
-                      //  putString("user_email", user?.email)
-                      //  putString("user_name", user?.displayName)
-                      //  putString("user_photo_url", user?.photoUrl?.toString())
-                        apply()
-                    }
-
-                  */
                     startActivity(Intent(this@LoginActivity, NameAddressActivity::class.java))
                     finish()
+
+
+
+
+                    databaseReference.child("users").child(auth.currentUser?.uid.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.hasChild("username")) {
+                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                finish()                            }
+                            else {
+                                startActivity(Intent(this@LoginActivity, NameAddressActivity::class.java))
+                                finish()                                }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
 
          /*
                     if (user != null) {

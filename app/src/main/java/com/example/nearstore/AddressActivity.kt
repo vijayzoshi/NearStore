@@ -1,6 +1,7 @@
 package com.example.nearstore
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -52,8 +53,13 @@ class AddressActivity : AppCompatActivity() {
 
         val editTv : TextView = findViewById(R.id.tv_edit)
         editTv.setOnClickListener{
-            val bottomSheet = AddressBottomsheet()
-            bottomSheet.show(supportFragmentManager, AddressBottomsheet.TAG)
+
+            val intent = Intent(this, EditAddressActivity::class.java)
+            intent.putExtra("source", "address")
+
+            startActivity(intent)
+            //val bottomSheet = AddressBottomsheet()
+           // bottomSheet.show(supportFragmentManager, AddressBottomsheet.TAG)
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.nearstore.databinding.ActivityOrderStatusBinding
 import com.example.nearstore.databinding.ActivityStoreBinding
+
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -21,7 +22,6 @@ import com.google.firebase.database.ValueEventListener
 class StoreActivity : AppCompatActivity() {
 
 
-    private lateinit var searchIv : ImageView
     private lateinit var oneLv : LinearLayout
     private lateinit var secondLv : LinearLayout
     private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("stores")
@@ -59,16 +59,17 @@ class StoreActivity : AppCompatActivity() {
 
 
         val storeid = intent.getIntExtra("storeid", 0)
+        val deliverytime = intent.getIntExtra("deliverytime",0)
+        binding.tvDeliverytime.text = deliverytime.toString() + " min"
 
 
-//var imagelink : String = ""
 
         databaseReference.child(storeid.toString()).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     binding.tvStorename.text = snapshot.child("storename").getValue(String::class.java)
                     binding.tvStorelocation.text = snapshot.child("storelocation").getValue(String::class.java)
                     binding.tvStoretiming.text = snapshot.child("storetiming").getValue(String::class.java)
-                    binding.tvRatings.text = snapshot.child("storerating").getValue(Int::class.java).toString()
+                    binding.tvRatings.text = snapshot.child("storerating").getValue(Double::class.java).toString() + "(" + snapshot.child("noofrating").getValue(String::class.java) + ")"
                     var   imagelink = snapshot.child("storeimage").getValue(String::class.java).toString()
                     Glide.with(getApplicationContext())
                         .load(imagelink)
@@ -83,8 +84,7 @@ class StoreActivity : AppCompatActivity() {
 
 
 
-        searchIv = findViewById(R.id.tv_help)
-        searchIv.setOnClickListener {
+        binding.ivSearch.setOnClickListener {
             val intent : Intent = Intent(this, SearchProductActivity::class.java)
             intent.putExtra("storeid", storeid)
 
@@ -95,23 +95,44 @@ class StoreActivity : AppCompatActivity() {
 
 
 
-       // oneLv = findViewById(R.id.lv_one)
-        binding.lvOne.setOnClickListener{
+      /*  binding.lvBpcone.setOnClickListener{
             val intent : Intent = Intent(this, ProductsActivity::class.java)
             intent.putExtra("storeid", storeid)
-            intent.putExtra("categorytype", "bathbody")
+            intent.putExtra("categorytype", "Bath & Body")
             startActivity(intent)
 
         }
 
-       // secondLv = findViewById(R.id.lv_two)
-        binding.lvTwo.setOnClickListener{
+       */
+
+        binding.lvBpctwo.setOnClickListener{
             val intent : Intent = Intent(this, ProductsActivity::class.java)
             intent.putExtra("storeid", storeid)
-            intent.putExtra("categorytype", "skincare")
+            intent.putExtra("categorytype", "Skincare")
             startActivity(intent)
 
         }
+
+
+
+        binding.lvGroceryone.setOnClickListener{
+            val intent : Intent = Intent(this, ProductsActivity::class.java)
+            intent.putExtra("storeid", storeid)
+            intent.putExtra("categorytype", "Aata, Rice & Dal")
+            startActivity(intent)
+
+        }
+
+        binding.lvGroceryeight.setOnClickListener{
+            val intent : Intent = Intent(this, ProductsActivity::class.java)
+            intent.putExtra("storeid", storeid)
+            intent.putExtra("categorytype", "Dairy & Breads")
+            startActivity(intent)
+
+        }
+
+
+
 
 
 

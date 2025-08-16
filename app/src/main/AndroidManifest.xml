@@ -18,6 +18,9 @@
         android:theme="@style/Theme.NearStore"
         tools:targetApi="31">
         <activity
+            android:name=".EditAddressActivity"
+            android:exported="false" />
+        <activity
             android:name=".HelpActivity"
             android:exported="false" />
         <activity
@@ -34,7 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".Data.SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,9 +49,7 @@
             android:exported="false" />
         <activity
             android:name=".NameAddressActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".CartActivity"
             android:exported="false" />
@@ -57,9 +58,7 @@
             android:exported="true" />
         <activity
             android:name=".PhonenoActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".SearchActivity"
             android:exported="false" />
@@ -74,9 +73,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

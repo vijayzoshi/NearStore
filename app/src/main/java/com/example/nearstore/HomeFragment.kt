@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.StoreAdapter
@@ -28,14 +29,22 @@ import org.checkerframework.checker.units.qual.A
 
 class HomeFragment : Fragment() {
 
-    lateinit var username : TextView
-    val databaseReference = FirebaseDatabase.getInstance().getReference()
-    lateinit var storeRecyclerView: RecyclerView
-    lateinit var shimmerFrameLayout: ShimmerFrameLayout
-    lateinit var storeAapter: StoreAdapter
-    lateinit var storeArrayList: ArrayList<StoreModal>
+    private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference()
+    private lateinit var storeRecyclerView: RecyclerView
+    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
+    private lateinit var nestedScroll: NestedScrollView
 
-    lateinit var addressLv : LinearLayout
+    private lateinit var storeAapter: StoreAdapter
+    private lateinit var storeArrayList: ArrayList<StoreModal>
+    private lateinit var addressLl: LinearLayout
+    private lateinit var totalbillTv: TextView
+    private lateinit var arrivingTv: TextView
+    private lateinit var orderstatusCl: ConstraintLayout
+    private lateinit var uid : String
+    private lateinit var viewBtn: Button
+    private lateinit var expertEt: EditText
+    private lateinit var myaddressTv: TextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,154 +54,157 @@ class HomeFragment : Fragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPref = requireActivity().getSharedPreferences("userdetails", Context.MODE_PRIVATE)
-        val uid = sharedPref.getString("userid", "haha")
+        uid = sharedPref.getString("userid", "haha").toString()
 
-        Toast.makeText(requireContext(),uid, Toast.LENGTH_LONG).show()
+        getViews(view)
 
-        val myaddressTv : TextView  = view.findViewById(R.id.tv_address)
-        val totalbillTv : TextView  = view.findViewById(R.id.tv_totalbill)
+        getListeners()
 
-        val arrivingTv : TextView  = view.findViewById(R.id.tv_arriving)
+        getRecylcerView()
 
-
-
-        if (uid != null) {
-            databaseReference.child("users").child(uid).child("myaddress")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-
-
-                        // myaddressTv.text = snapshot.getValue(String::class.java).toString()
-
-                        val myaddress = snapshot.getValue(String::class.java).toString()
-                        val shortaddress = if (myaddress.length > 6) {
-                            myaddress.substring(0, 12) + "..."
-                        } else {
-                            myaddress
-                        }
-                        myaddressTv.text = shortaddress
-
-                    }
-
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-
-                    }
-                }
-
-                )
-        }
-
-
-
-        addressLv = view.findViewById(R.id.lv_address)
-        addressLv.setOnClickListener{
-
-            val bottomSheet = AddressBottomsheet()
-            bottomSheet.show(parentFragmentManager, AddressBottomsheet.TAG)
-
-        }
-        // Search
-        val expertEt: EditText = view.findViewById(R.id.et_search)
-        expertEt.setOnClickListener {
-            val intent = Intent(requireContext(), SearchActivity::class.java)
-            startActivity(intent)
-        }
-
-
-        storeArrayList = ArrayList<StoreModal>()
-        storeRecyclerView = view.findViewById(R.id.rv_store)
-        storeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        storeAapter = StoreAdapter(requireContext(), storeArrayList)
+        getUserAddress()
 
         getFirebaseData()
 
+        getOrderStatus()
+
+    //    getExtendedFab()
 
 
-        shimmerFrameLayout = view.findViewById(R.id.shimmerLayout)
-        storeRecyclerView.visibility = View.GONE
-        shimmerFrameLayout.startShimmer()
-        shimmerFrameLayout.visibility = View.VISIBLE
-        storeRecyclerView.adapter = storeAapter
+    }
 
 
-        val extendedfab = view.findViewById<ExtendedFloatingActionButton>(R.id.extended_fab)
-        extendedfab.hide()
-
-        val orderstatus = view.findViewById<ConstraintLayout>(R.id.cl_orderstatus)
-        orderstatus.visibility = View.GONE
-
-
-        databaseReference.child("users").child(uid.toString()).child("cart")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-              if (snapshot.exists()) {
-                        extendedfab.show()
-                        val itemsadded =  snapshot.childrenCount.toString()+ " " + "items added"
-                        extendedfab.text = itemsadded
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-            })
-
-        extendedfab.setOnClickListener {
-
-            startActivity(Intent(requireContext(), CartActivity::class.java))
+    private fun getListeners() {
+        addressLl.setOnClickListener {
+            val bottomSheet = AddressBottomsheet()
+            bottomSheet.show(parentFragmentManager, AddressBottomsheet.TAG)
         }
 
-
-
-
-
-        val viewBtn = requireActivity().findViewById<Button>(R.id.btn_view)
         viewBtn.setOnClickListener {
             startActivity(Intent(requireContext(), OrderStatusActivity::class.java))
         }
 
 
-        databaseReference.child("users").child(uid.toString()  ).child("orders").child("orderongoing")
+        expertEt.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun getRecylcerView() {
+
+        storeArrayList = ArrayList<StoreModal>()
+        storeAapter = StoreAdapter(requireContext(), storeArrayList)
+        storeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        storeRecyclerView.adapter = storeAapter
+        storeAapter.onItemClick = { store, time ->
+            val intent = Intent(requireContext(), StoreActivity::class.java)
+            intent.putExtra("storeid", store.storeid)
+            intent.putExtra("deliverytime", time)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun getViews(view: View) {
+
+
+        //views
+        viewBtn = view.findViewById(R.id.btn_view)
+        addressLl = view.findViewById(R.id.lv_address)
+        myaddressTv = view.findViewById(R.id.tv_address)
+        totalbillTv  = view.findViewById(R.id.tv_totalbill)
+        arrivingTv= view.findViewById(R.id.tv_arriving)
+        storeRecyclerView = view.findViewById(R.id.rv_store)
+        shimmerFrameLayout = view.findViewById(R.id.shimmerLayout)
+        nestedScroll = view.findViewById(R.id.nestedScroll)
+        orderstatusCl = view.findViewById(R.id.cl_orderstatus)
+        expertEt = view.findViewById(R.id.et_search)
+
+        //visibility
+        shimmerFrameLayout.startShimmer()
+        shimmerFrameLayout.visibility = View.VISIBLE
+        orderstatusCl.visibility = View.GONE
+        nestedScroll.visibility = View.GONE
+
+
+
+    }
+
+
+    private fun getUserAddress() {
+
+        databaseReference.child("users").child(uid).child("myaddress")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    val myaddress = snapshot.getValue(String::class.java).toString()
+                    val shortaddress = if (myaddress.length > 20) {
+                        myaddress.substring(0, 20) + "..."
+                    } else {
+                        myaddress
+                    }
+                    myaddressTv.text = shortaddress
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            }
+
+            )
+    }
+
+    private fun getOrderStatus() {
+
+        databaseReference.child("users").child(uid).child("orders").child("orderongoing")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     if (snapshot.exists()) {
-                        orderstatus.visibility = View.VISIBLE
+                        orderstatusCl.visibility = View.VISIBLE
 
 
-                        if(snapshot.child("orderstatus").getValue(String::class.java)=="ongoing") {
-                            viewBtn.setText("View")
+                        val orderStatus =snapshot.child("orderstatus").getValue(String::class.java)
+                        val grandTotal = snapshot.child("grandtotal").getValue(Int::class.java).toString()
 
-                            arrivingTv.text = snapshot.child("timing").getValue(String :: class.java)
-                            totalbillTv.text = "Rs" + snapshot.child("grandtotal").getValue(Int::class.java).toString()
+                        if ( orderStatus == "ongoing") {
+                            viewBtn.text = "View"
+                            arrivingTv.text = snapshot.child("timing").getValue(String::class.java)
+
+
+                            totalbillTv.text = "₹$grandTotal"
 
                             viewBtn.setOnClickListener {
-                                startActivity(Intent(requireContext(), OrderStatusActivity::class.java))
+
+                                startActivity(Intent(requireContext(), OrderStatusActivity::class.java)
+
+                                )
                             }
 
-                        }else{
-                            viewBtn.setText("Okay")
+                        } else {
+                            viewBtn.text = "Okay"
                             arrivingTv.text = "Order Delivered!"
-                            totalbillTv.text = "Rs" +snapshot.child("grandtotal").getValue(Int::class.java).toString()
 
-
+                            totalbillTv.text = "₹$grandTotal"
                             viewBtn.setOnClickListener {
-                                orderstatus.visibility = View.GONE
+                                databaseReference.child("users").child(uid).child("orders").child("orderongoing").removeValue()
+                                orderstatusCl.visibility = View.GONE
 
                             }
+
 
                         }
-                    }else{
-                        orderstatus.visibility = View.GONE
+
+
+
                     }
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -205,7 +217,7 @@ class HomeFragment : Fragment() {
     }
 
 
-   fun getFirebaseData(){
+    fun getFirebaseData() {
 
         databaseReference.child("stores").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -216,19 +228,15 @@ class HomeFragment : Fragment() {
                         storeArrayList.add(data!!)
                     }
 
-
                     storeAapter.notifyDataSetChanged()
 
                     shimmerFrameLayout.stopShimmer()
-                    shimmerFrameLayout.visibility= View.GONE
-                    storeRecyclerView.visibility = View.VISIBLE
+                    shimmerFrameLayout.visibility = View.GONE
+                    nestedScroll.visibility = View.VISIBLE
 
 
-                    storeAapter.onItemClick = {
-                        val intent = Intent(requireContext(), StoreActivity::class.java)
-                        intent.putExtra("storeid", it.storeid)
-                        startActivity(intent)
-                    }
+
+
                 }
             }
 
@@ -239,4 +247,25 @@ class HomeFragment : Fragment() {
 
 
     }
+
+    /*  private fun getExtendedFab() {
+           val extendedfab = view.findViewById<ExtendedFloatingActionButton>(R.id.extended_fab)
+              extendedfab.hide()
+              databaseReference.child("users").child(uid.toString()).child("cart")
+                  .addValueEventListener(object : ValueEventListener {
+                      override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                              extendedfab.show()
+                              val itemsadded =  snapshot.childrenCount.toString()+ " " + "items added"
+                              extendedfab.text = itemsadded
+                          }
+                      }
+                      override fun onCancelled(error: DatabaseError) {
+                      }
+                  })
+              extendedfab.setOnClickListener {
+                  startActivity(Intent(requireContext(), CartActivity::class.java))
+              }
+      }*/
+
 }

@@ -48,7 +48,7 @@ sharedPref = requireActivity().getSharedPreferences("userdetails", Context.MODE_
 
 
         if (uid != null) {
-            databaseReference.child("users").child(uid)
+            databaseReference.child("users").child(uid.toString())
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -64,7 +64,6 @@ sharedPref = requireActivity().getSharedPreferences("userdetails", Context.MODE_
 
 
                     override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
 
                     }
                 }

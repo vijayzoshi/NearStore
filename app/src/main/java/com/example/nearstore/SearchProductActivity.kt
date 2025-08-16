@@ -1,8 +1,10 @@
 package com.example.nearstore
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.ProductAdapter
 import com.example.nearstore.Data.ProductModal
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -43,6 +46,11 @@ class SearchProductActivity : AppCompatActivity() {
             insets
         }
 
+
+        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+        val uid = sharedPref.getString("userid", "haha")
+
+
         storeSv = findViewById(R.id.sv_store)
 
 
@@ -51,45 +59,15 @@ class SearchProductActivity : AppCompatActivity() {
 
         productArrayList = ArrayList<ProductModal>()
         productRecyclerView = findViewById(R.id.rv_product)
-        productRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        productRecyclerView.layoutManager = GridLayoutManager(this,2 )
         productAdapter = ProductAdapter(this@SearchProductActivity, productArrayList)
         productRecyclerView.adapter = productAdapter
 
-/*
-        val currentQuery = storeSv.query.toString()
 
-        if (currentQuery.isEmpty() || currentQuery.isBlank()) {
-            productRecyclerView.visibility = View.GONE
-        } else {
-            productRecyclerView.visibility = View.VISIBLE
-
-        }
-
-
- */
-        databaseReference.child(storeid).child("allproduct")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        productArrayList.clear()
-
-                        for (datasnapshot in snapshot.children) {
-                            val data = datasnapshot.getValue(ProductModal::class.java)
-                            productArrayList.add(data!!)
-                        }
-                        productAdapter.notifyDataSetChanged()
-
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-            })
         databaseReference.child(storeid).child("storename").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val storename  = snapshot.getValue(String::class.java)
-                storeSv.queryHint = storename
+                storeSv.queryHint = "Search in " +storename
 
             }
 
@@ -109,8 +87,12 @@ class SearchProductActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
+                if (!newText.isNullOrEmpty()) {
+                    firebasedata()
                     search(newText)
+                }else{
+                    productRecyclerView.visibility = View.GONE
+
                 }
 
 
@@ -119,12 +101,50 @@ class SearchProductActivity : AppCompatActivity() {
 
         })
 
+        /*
+
+        val extendedfab : ExtendedFloatingActionButton = findViewById(R.id.extended_fab)
+        extendedfab.hide()
 
 
+        databaseReference.child("users").child(uid.toString()).child("cart")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        extendedfab.show()
+                        val itemsadded =  snapshot.childrenCount.toString()+ " " + "items added"
+                        extendedfab.text = itemsadded
+                    }else{
+                        extendedfab.hide()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+
+
+        extendedfab.setOnClickListener {
+
+            val intent: Intent = Intent(this, CartActivity::class.java)
+            intent.putExtra("storeid", storeid)
+
+            startActivity(intent)
+        }
+*/
 
     }
 
     fun search(word: String) {
+
+        if (word.isEmpty()) {
+            productRecyclerView.visibility = View.GONE
+
+        }else{
+            productRecyclerView.visibility  = View.VISIBLE
+
+        }
         val searchList = ArrayList<ProductModal>()
         for (x in productArrayList) {
             if (x.productname.lowercase().contains(word.lowercase(Locale.getDefault()))
@@ -134,6 +154,7 @@ class SearchProductActivity : AppCompatActivity() {
         }
 
         productAdapter.searchDataList(searchList)
+/*
         if (word.isEmpty() || word.isBlank()) {
             productRecyclerView.visibility = View.GONE
         } else {
@@ -141,6 +162,8 @@ class SearchProductActivity : AppCompatActivity() {
 
         }
 
+
+ */
 
 
 
@@ -151,6 +174,27 @@ class SearchProductActivity : AppCompatActivity() {
 
     fun firebasedata() {
 
+        databaseReference.child(storeid).child("allproduct")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        productArrayList.clear()
+
+                        for (datasnapshot in snapshot.children) {
+                            val data = datasnapshot.getValue(ProductModal::class.java)
+                            productArrayList.add(data!!)
+                        }
+                        productRecyclerView.visibility = View.VISIBLE
+
+                        productAdapter.notifyDataSetChanged()
+
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
 
     }
 

@@ -7,11 +7,36 @@
     android:background="#FFFFFF"
     tools:context=".AccountFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="Account"
+            android:textColor="@color/darkgreen"
+
+            android:fontFamily="@font/plusjakartasansbold"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
     <TextView
         android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/plusjakartasansbold"
         android:text="Vijay Joshi"
@@ -19,13 +44,13 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/tv_usernumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:shadowColor="#000000"
         android:text="8377055197"
         android:textSize="15sp"
@@ -66,15 +91,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
+                android:layout_gravity="center_vertical"
 
 
-                android:src="@drawable/home"
-            />
+                android:src="@drawable/home" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,6 +108,8 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="My Address"
+                android:layout_gravity="center_vertical"
+
                 android:textColor="#000000"
 
                 android:fontFamily="@font/plusjakartasansbold"
@@ -114,12 +141,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:src="@drawable/history"
+                android:layout_gravity="center_vertical"
                 />
 
             <TextView
@@ -129,6 +157,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="Order History"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/plusjakartasansbold"
 
 
@@ -153,14 +182,13 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="19dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-
-                android:src="@drawable/question___copy"
-                />
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/question___copy" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,7 +198,7 @@
                 android:layout_marginBottom="15dp"
                 android:text="Help"
                 android:fontFamily="@font/plusjakartasansbold"
-
+                android:layout_gravity="center_vertical"
                 android:textColor="#000000"
 
                 android:textSize="16sp" />
@@ -198,10 +226,11 @@
             tools:layout_editor_absoluteY="418dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginBottom="15dp"
                 android:src="@drawable/power_off" />
 
@@ -213,7 +242,7 @@
                 android:layout_marginBottom="15dp"
                 android:text="Logout"
                 android:fontFamily="@font/plusjakartasansbold"
-
+                android:layout_gravity="center_vertical"
                 android:textColor="#000000"
 
                 android:textSize="16sp" />

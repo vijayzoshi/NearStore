@@ -1,5 +1,6 @@
 package com.example.nearstore
 
+import android.app.appsearch.SearchResult
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Locale
 
 class ProductsActivity : AppCompatActivity() {
 
@@ -55,12 +57,9 @@ class ProductsActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
         val uid = sharedPref.getString("userid", "haha")
-        Toast.makeText(this,uid, Toast.LENGTH_LONG).show()
-
 
 
         categorytype = intent.getStringExtra("categorytype").toString()
-
         storeid = intent.getIntExtra("storeid", 0).toString()
 
 
@@ -74,7 +73,9 @@ class ProductsActivity : AppCompatActivity() {
 
         searchIv = findViewById(R.id.tv_help)
         searchIv.setOnClickListener {
-            val intent: Intent = Intent(this, CartActivity::class.java)
+            val intent: Intent = Intent(this, SearchProductActivity::class.java)
+            intent.putExtra("storeid", storeid)
+
             startActivity(intent)
         }
 
@@ -105,29 +106,23 @@ class ProductsActivity : AppCompatActivity() {
 
 
         when (categorytype) {
-            "skincare" -> {
+            "Skincare" -> {
                 // Do something for apple
-                getnavigationrail("Facewash", "Cream", "Suncreen", "Serum", "Bodylotion", R.drawable.facewash, R.drawable.facewash, R.drawable.facewash, R.drawable.facewash, R.drawable.facewash
+                getnavigationrail("Facewash", "Cream", "Suncreen",  "Bodylotion", R.drawable.facewashtype, R.drawable.creamstype, R.drawable.suncreentype, R.drawable.bodylotiontype
                 )
             }
 
-            "bathbody" -> {
-                // Do something for banana
-                getnavigationrail("Soap", "Bodywash", "Handwash", "Powder", "Bodyscrub", R.drawable.facewash, R.drawable.facewash, R.drawable.facewash,R.drawable.facewash,
-                    R.drawable.facewash
-                )            }
 
-            "cherry" -> {
-                // Do something for cherry
+
+            "Aata, Rice & Dal" -> {
+                getnavigationrail("Aata", "Rice", "Dal", "Besan & Soji", R.drawable.riceee, R.drawable.ricetype, R.drawable.daltype, R.drawable.besantype
+                )
             }
 
-            "date" -> {
-                // Do something for date
-            }
-
-            "elderberry" -> {
-                // Do something for elderberry
-            }
+            "Dairy & Breads" -> {
+            getnavigationrail("Breads", "Milk & Lassi", "Eggs & Curd", "Paneer", R.drawable.breadtype, R.drawable.milktype, R.drawable.eggstype, R.drawable.paneertype
+            )
+        }
 
             else -> {
             }
@@ -171,7 +166,7 @@ class ProductsActivity : AppCompatActivity() {
 
     fun firebasedata(a: String) {
 
-        databaseReference.child("stores").child(storeid).child(categorytype).child(a)
+        databaseReference.child("stores").child(storeid).child(categorytype.lowercase().replace(" ", "")).child(a)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -189,11 +184,13 @@ class ProductsActivity : AppCompatActivity() {
                         productRecyclerView.visibility = View.VISIBLE
 
 
-                        productAdapter.onItemClick = {
+                        /*productAdapter.onItemClick = {
                             val intent = Intent(this@ProductsActivity, StoreActivity::class.java)
                             intent.putExtra("storeid", it.productname)
                             startActivity(intent)
                         }
+
+                         */
                     }
                 }
 
@@ -204,22 +201,13 @@ class ProductsActivity : AppCompatActivity() {
     }
 
 
-    fun getnavigationrail(itemone: String, itemtwo: String, itemthree: String, itemfour: String, itemfive: String, iconone: Int, icontwo: Int, iconthree: Int, iconfour: Int, iconfive: Int
+    fun getnavigationrail(itemone: String, itemtwo: String, itemthree: String, itemfour: String, iconone: Int, icontwo: Int, iconthree: Int, iconfour: Int,
     ) {
 
-        // Example: Dynamic items
-        val items = listOf(itemone, itemtwo, itemthree, itemfour, itemfive)
-        val icons = listOf(iconone, icontwo, iconthree, iconfour, iconfive)
+        val items = listOf(itemone, itemtwo, itemthree, itemfour)
+        val icons = listOf(iconone, icontwo, iconthree, iconfour)
 
 
-        // Add items to the rail dynamically
-        /*      items.forEachIndexed { index, label ->
-              navigationRail.menu.add(Menu.NONE, index, Menu.NONE, label).apply {
-                  setIcon(icons[index])
-              }
-          }
-
-     */
 
 
         // Add items to the rail dynamically
@@ -228,38 +216,37 @@ class ProductsActivity : AppCompatActivity() {
             item.icon = ContextCompat.getDrawable(this, icons[index])
 
         }
+        navigationRail.itemIconTintList = null
+
         navigationRail.menu.getItem(0).isChecked = true
-        firebasedata(itemone.lowercase())
+
+        firebasedata(itemone.lowercase().replace(" ", ""))
 
         navigationRail.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 0 -> {
 
-                    firebasedata(itemone.lowercase())
+                    firebasedata(itemone.lowercase().replace(" ", ""))
                     true
                 }
 
                 1 -> {
 
-                    firebasedata(itemtwo.lowercase())
+                    firebasedata(itemtwo.lowercase().replace(" ", ""))
                     true
                 }
 
                 2 -> {
-                    firebasedata(itemthree.lowercase())
+                    firebasedata(itemthree.lowercase().replace(" ", ""))
                     true
                 }
 
                 3 -> {
 
-                    firebasedata(itemfour.lowercase())
+                    firebasedata(itemfour.lowercase().replace(" ", ""))
                     true
                 }
 
-                4 -> {
-                    firebasedata(itemfive.lowercase())
-                    true
-                }
 
                 else -> false
             }

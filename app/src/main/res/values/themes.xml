@@ -9,7 +9,9 @@
 
 
     </style>
-
+    <style name="CustomAlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/black</item>
+    </style>
     <!--
     <style name="TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>

@@ -1,6 +1,7 @@
 package com.example.nearstore
 
 import android.animation.Animator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -8,8 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.google.firebase.database.FirebaseDatabase
 
 class OrderPlacedActivity : AppCompatActivity() {
+
+
+    val database = FirebaseDatabase.getInstance().getReference()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,6 +26,9 @@ class OrderPlacedActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+        val uid = sharedPref.getString("userid", "haha").toString()
 
 
 
@@ -34,6 +43,8 @@ class OrderPlacedActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animator) {
                 startActivity(intent)
+                database.child("users").child(uid).child("cart").removeValue()
+
                 finish()
             }
 

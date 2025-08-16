@@ -10,10 +10,11 @@ data class OrderData(
     val ordertime: String = "",
     val orderstatus: String = "ongoing",
     val useraddress: String = "",
-    val timing: String = "",
+    val timing: String = "Arriving in 35 min",
     val deliveryagentname: String = "",
     val deliveryagentphone: Int = 0,
 
     val itemsList: List<Product> = emptyList(),
-    val timestamp: Long
+    val timestamp: Long,
+    val storeimage: String
 )

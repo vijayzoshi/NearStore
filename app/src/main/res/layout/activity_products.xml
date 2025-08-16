@@ -63,10 +63,12 @@
         android:layout_height="0dp"
         app:backgroundTint="@color/white"
         android:clipToPadding="false"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="2dp"
+
         app:itemTextAppearanceActive="@color/darkgreen"
         android:nestedScrollingEnabled="true"
         app:itemIconSize="33dp"
+
         app:itemIconTint="@null"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,6 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

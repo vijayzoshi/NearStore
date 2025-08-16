@@ -56,7 +56,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:queryBackground="@color/white"
-                        app:queryHint="search store" />
+                        app:queryHint="search store..." />
                 </androidx.cardview.widget.CardView>
 
 
@@ -74,6 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/rv_stores"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/appbar_layout" />
 
 

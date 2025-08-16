@@ -1,7 +1,9 @@
 package com.example.nearstore
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -41,24 +43,42 @@ class OrderDetailsActivity : AppCompatActivity() {
         }
 
         orderid = intent.getIntExtra("orderid",0)
-        Toast.makeText(this,orderid.toString(), Toast.LENGTH_LONG).show()
 
         val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
         uid = sharedPref.getString("userid", "haha").toString()
 
+        binding.myToolbar.title = "Order ID : " + orderid
+        binding.myToolbar.setNavigationOnClickListener {
+            finish()
+        }
+        setSupportActionBar(binding.myToolbar)
+        binding.tvHelp.setOnClickListener {
+
+            val intent = Intent(this, HelpActivity :: class.java)
+            startActivity(intent)
+
+        }
 
         if (orderid != null) {
             database.child("users").child(uid.toString()).child("orders").child("orderhistory").child(orderid.toString())
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         binding.tvStorename.text = snapshot.child("storeName").getValue(String::class.java).toString()
-                          binding.tvItemtotal.text = snapshot.child("itemtotal").getValue(Int::class.java).toString()
-                         binding.tvDeliveryfee.text = snapshot.child("deliveryfee").getValue(Int::class.java).toString()
-                        binding.tvOrderplaced.text = snapshot.child("ordertime").getValue(String::class.java).toString()
+                          binding.tvItemtotal.text = "₹" +snapshot.child("itemtotal").getValue(Int::class.java).toString()
+                         binding.tvDeliveryfee.text = "₹" +snapshot.child("deliveryfee").getValue(Int::class.java).toString()
+                        binding.tvOrderplaced.text = "Order placed on "+snapshot.child("ordertime").getValue(String::class.java).toString()
                         binding.tvStorelocation.text = snapshot.child("storeLocation").getValue(String::class.java).toString()
                         binding.tvMyaddress.text = snapshot.child("useraddress").getValue(String::class.java).toString()
+                        binding.tvGrandtotal.text = "₹" +snapshot.child("grandtotal").getValue(Int::class.java).toString()
 
-                        binding.tvGrandtotal.text = snapshot.child("grandtotal").getValue(Int::class.java).toString()
+
+                        if(snapshot.child("orderstatus").getValue(String::class.java).toString() == "delivered"){
+                            binding.tvCancelled.visibility = View.GONE
+                        }else{
+
+                            binding.tvDelivered.visibility = View.GONE
+
+                        }
 
                     }
 
@@ -69,7 +89,7 @@ class OrderDetailsActivity : AppCompatActivity() {
         }
 
         recyclerView = findViewById(R.id.rv_cart1)
-        adapter = PlacedOrderAdapter(productArraylist)
+        adapter = PlacedOrderAdapter(this@OrderDetailsActivity, productArraylist)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
