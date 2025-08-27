@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchProductActivity">
+    tools:context=".UI.SearchProductActivity">
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -67,7 +67,6 @@
             android:id="@+id/rv_product"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_marginTop="?attr/actionBarSize"
             android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"

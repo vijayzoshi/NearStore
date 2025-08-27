@@ -22,9 +22,6 @@ import com.google.firebase.database.getValue
 
 class PlacedOrderAdapter(val context: Context, private val dataList: ArrayList<Product>) : RecyclerView.Adapter<PlacedOrderAdapter.MyViewHolder>() {
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rv_placedorders, parent, false)
         return MyViewHolder(view)
@@ -34,46 +31,23 @@ class PlacedOrderAdapter(val context: Context, private val dataList: ArrayList<P
         val data = dataList.get(position)
         holder.productnameTV.text = data.productname
         holder.productnumberIV.text = "x" + data.productnumber.toString()
-
         val finalprice = data.productprice*data.productnumber
         holder.productpriceIV.text = "₹" +finalprice.toString()
         holder.productquantityIV.text = data.productquantity
-
-
-
-
         val imagelink = data.productpic
         Glide.with(context)
             .load(imagelink)
             .into(holder.productimageIv)
 
-
-
-
-
-
         }
 
-
-
-
-
-
-
-
-
     override fun getItemCount() = dataList.size
-
-
-    class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
+   class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         val productnameTV: TextView = itemview.findViewById(R.id.tv_productname)
         val productnumberIV = itemview.findViewById<TextView>(R.id.tv_productnumber)
         val productquantityIV = itemview.findViewById<TextView>(R.id.tv_productquantity)
         val productimageIv = itemview.findViewById<ImageView>(R.id.iv_productimage)
         val productpriceIV = itemview.findViewById<TextView>(R.id.tv_productprice)
-
-
-
 
     }
 

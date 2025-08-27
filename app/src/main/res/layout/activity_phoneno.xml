@@ -8,7 +8,7 @@
     android:padding="24dp"
     android:id="@+id/main"
     android:gravity="center"
-    tools:context=".PhonenoActivity">
+    tools:context=".UI.PhonenoActivity">
 
     <TextView
         android:id="@+id/locationText"

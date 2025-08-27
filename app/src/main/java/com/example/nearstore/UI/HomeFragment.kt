@@ -1,4 +1,4 @@
-package com.example.nearstore
+package com.example.nearstore.UI
 
 import android.content.Context
 import android.content.Intent
@@ -11,20 +11,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.StoreAdapter
+import com.example.nearstore.Data.StoreModal
+import com.example.nearstore.R
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import org.checkerframework.checker.units.qual.A
 
 
 class HomeFragment : Fragment() {
@@ -139,7 +138,7 @@ class HomeFragment : Fragment() {
 
     private fun getUserAddress() {
 
-        databaseReference.child("users").child(uid).child("myaddress")
+        databaseReference.child("users").child(uid).child("useraddress")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 

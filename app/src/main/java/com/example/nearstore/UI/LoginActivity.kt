@@ -1,4 +1,4 @@
-package com.example.nearstore
+package com.example.nearstore.UI
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.nearstore.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -88,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+
                     val user = auth.currentUser
 
                     val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
@@ -97,8 +99,8 @@ class LoginActivity : AppCompatActivity() {
                     editor.apply()
 
 
-                    startActivity(Intent(this@LoginActivity, NameAddressActivity::class.java))
-                    finish()
+              //      startActivity(Intent(this@LoginActivity, NameAddressActivity::class.java))
+                //    finish()
 
 
 

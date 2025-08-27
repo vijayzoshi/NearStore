@@ -1,13 +1,11 @@
-package com.example.nearstore
+package com.example.nearstore.UI
 
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
-import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,11 +13,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.nearstore.R
 import com.example.nearstore.databinding.ActivityEditAddressBinding
-import com.example.nearstore.databinding.ActivityNameAddressBinding
-import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -34,13 +30,12 @@ import com.google.firebase.database.ValueEventListener
 class EditAddressActivity : AppCompatActivity() {
 
 
-    val database = FirebaseDatabase.getInstance().getReference()
+    private val database = FirebaseDatabase.getInstance().getReference()
     private lateinit var binding: ActivityEditAddressBinding
-
-lateinit  var userlat : String
-    lateinit  var userlong : String
-
-
+    private var userlat: String? = null
+    private var userlong: String? = null
+    private var uid: String? = null
+    private var source: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,20 +51,90 @@ lateinit  var userlat : String
         binding.ibBack.setOnClickListener {
             finish()
         }
+        source = intent.getStringExtra("source")
+        getUserId()
+        getUserAddress()
+        checkLocationPermission()
 
+        binding.btnContinue.setOnClickListener {
+
+
+            if (userlat == null || userlong == null) {
+                Toast.makeText(this, "Fetching location, please wait...", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            sendData()
+            inputSharedprefData()
+            navigate()
+
+
+        }
+
+    }
+
+    private fun navigate() {
+
+        when (source) {
+            "address" -> {
+                val intent = Intent(this, AddressActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+            }
+
+            "cart" -> {
+                val intent = Intent(this, CartActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+            }
+
+            "name" -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+
+            "bottomsheet" -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+
+            else -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        finish()
+    }
+
+
+    private fun inputSharedprefData() {
         val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
-        var uid = sharedPref.getString("userid", "haha").toString()
+        val editor = sharedPref.edit()
+        editor.putString("userlat", userlat)
+        editor.putString("userlong", userlong)
+        editor.apply()
+    }
 
-        val source = intent.getStringExtra("source")
+
+    private fun sendData() {
+        database.child("users").child(uid.toString()).child("useraddress")
+            .setValue(binding.tfAddress.editText?.text.toString())
+        database.child("users").child(uid.toString()).child("userlat").setValue(userlat)
+        database.child("users").child(uid.toString()).child("userlong").setValue(userlong)
+    }
 
 
+    private fun getUserId() {
+        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+        uid = sharedPref.getString("userid", null).toString()
+    }
 
 
-        database.child("users").child(uid.toString()).child("myaddress")
+    fun getUserAddress() {
+
+        database.child("users").child(uid.toString()).child("useraddress")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-
-
                     binding.tfAddress.editText?.setText(snapshot.getValue(String::class.java))
 
                 }
@@ -78,57 +143,7 @@ lateinit  var userlat : String
                     TODO("Not yet implemented")
                 }
             })
-        checkLocationPermission()
-
-        binding.btnContinue.setOnClickListener {
-            database.child("users").child(uid.toString()).child("myaddress").setValue(binding.tfAddress.editText?.text.toString())
-
-            database.child("users").child(uid).child("userlat").setValue(userlat)
-            database.child("users").child(uid).child("userlong").setValue(userlong)
-
-           val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
-            val editor = sharedPref.edit()
-            editor.putString("userlat", userlat)
-            editor.putString("userlong", userlong)
-            editor.apply()
-
-
-
-            when (source) {
-                "address" -> {
-                    val intent = Intent(this, AddressActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
-                }
-                "cart" -> {
-                    val intent = Intent(this, CartActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
-                }
-
-                "name" -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-
-                "bottomsheet" -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
-
-
-
-            }
-            finish()
-
-        }
-
     }
-
-
-
-
-
 
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
@@ -138,7 +153,7 @@ lateinit  var userlat : String
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                Companion.LOCATION_PERMISSION_REQUEST_CODE
+                LOCATION_PERMISSION_REQUEST_CODE
             )
         } else {
             checkIfLocationIsEnabled()
@@ -149,7 +164,7 @@ lateinit  var userlat : String
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Companion.LOCATION_PERMISSION_REQUEST_CODE) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 checkIfLocationIsEnabled()
             } else {
@@ -210,11 +225,7 @@ lateinit  var userlat : String
 
                     userlat = location.latitude.toString()
                     userlong = location.longitude.toString()
-                    Toast.makeText(
-                        this,
-                        "Lat: ${location.latitude}, Lng: ${location.longitude}",
-                        Toast.LENGTH_LONG
-                    ).show()
+
                 } else {
                     // If last location is null, request new location
                     val locationRequest = LocationRequest.create().apply {
@@ -229,12 +240,9 @@ lateinit  var userlat : String
                             if (newLocation != null) {
 
 
+                                userlat = newLocation.latitude.toString()
+                                userlong = newLocation.longitude.toString()
 
-                                Toast.makeText(
-                                    this@EditAddressActivity,
-                                    "Lat: ${newLocation.latitude}, Lng: ${newLocation.longitude}",
-                                    Toast.LENGTH_LONG
-                                ).show()
                             } else {
                                 Toast.makeText(
                                     this@EditAddressActivity,

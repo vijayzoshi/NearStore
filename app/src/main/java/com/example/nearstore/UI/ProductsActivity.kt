@@ -1,13 +1,11 @@
-package com.example.nearstore
+package com.example.nearstore.UI
 
-import android.app.appsearch.SearchResult
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nearstore.Adapter.ProductAdapter
 import com.example.nearstore.Data.ProductModal
+import com.example.nearstore.R
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.firebase.database.DataSnapshot
@@ -25,29 +24,26 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.Locale
 
 class ProductsActivity : AppCompatActivity() {
 
 
     private lateinit var searchIv: ImageView
-    var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    lateinit var productRecyclerView: RecyclerView
-    lateinit var productAdapter: ProductAdapter
-    lateinit var productArrayList: ArrayList<ProductModal>
-
-    lateinit var categorytype: String
-
-    lateinit var storeid: String
-
-    lateinit var navigationRail: NavigationRailView
+    private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference()
+    private lateinit var productRecyclerView: RecyclerView
+    private lateinit var productAdapter: ProductAdapter
+    private lateinit var productArrayList: ArrayList<ProductModal>
+    private lateinit var categorytype: String
+    private lateinit var uid: String
+    private lateinit var extendedfab: ExtendedFloatingActionButton
+    private lateinit var storeid: String
+    private lateinit var navigationRail: NavigationRailView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_products)
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -55,92 +51,36 @@ class ProductsActivity : AppCompatActivity() {
         }
 
 
-        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
-        val uid = sharedPref.getString("userid", "haha")
+        getuserId()
+        getintentdata()
 
-
-        categorytype = intent.getStringExtra("categorytype").toString()
-        storeid = intent.getIntExtra("storeid", 0).toString()
-
-
-        // Toolbar
-        val toolbar: Toolbar = findViewById(R.id.my_toolbar)
-        setSupportActionBar(toolbar)
-        toolbar.setTitle(categorytype)
-        toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
-
-        searchIv = findViewById(R.id.tv_help)
-        searchIv.setOnClickListener {
-            val intent: Intent = Intent(this, SearchProductActivity::class.java)
-            intent.putExtra("storeid", storeid)
-
-            startActivity(intent)
-        }
-
-
-
-
-
-
-
-
-        productArrayList = ArrayList<ProductModal>()
-        productRecyclerView = findViewById(R.id.rv_store)
-        productRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        productAdapter = ProductAdapter(this@ProductsActivity, productArrayList)
-        productRecyclerView.adapter = productAdapter
-
-        //  shimmerFrameLayout = findViewById(R.id.shimmerLayout)
-        productRecyclerView.visibility = View.GONE
-        //     shimmerFrameLayout.startShimmer()
-        //      shimmerFrameLayout.visibility = View.VISIBLE
+        gettoolbar()
+        getrecyclerView()
+        getsearchiv()
 
 
         navigationRail = findViewById(R.id.navigationRail)
-        // Clear existing (optional safety)
-
         navigationRail.menu.clear()
+        setupNavigationRail()
 
 
-
-        when (categorytype) {
-            "Skincare" -> {
-                // Do something for apple
-                getnavigationrail("Facewash", "Cream", "Suncreen",  "Bodylotion", R.drawable.facewashtype, R.drawable.creamstype, R.drawable.suncreentype, R.drawable.bodylotiontype
-                )
-            }
-
-
-
-            "Aata, Rice & Dal" -> {
-                getnavigationrail("Aata", "Rice", "Dal", "Besan & Soji", R.drawable.riceee, R.drawable.ricetype, R.drawable.daltype, R.drawable.besantype
-                )
-            }
-
-            "Dairy & Breads" -> {
-            getnavigationrail("Breads", "Milk & Lassi", "Eggs & Curd", "Paneer", R.drawable.breadtype, R.drawable.milktype, R.drawable.eggstype, R.drawable.paneertype
-            )
-        }
-
-            else -> {
-            }
-        }
-
-
-        val extendedfab : ExtendedFloatingActionButton = findViewById(R.id.extended_fab)
+        extendedfab = findViewById(R.id.extended_fab)
         extendedfab.hide()
+        getextendedfab()
 
+
+    }
+
+    private fun getextendedfab() {
 
         databaseReference.child("users").child(uid.toString()).child("cart")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         extendedfab.show()
-                      val itemsadded =  snapshot.childrenCount.toString()+ " " + "items added"
+                        val itemsadded = snapshot.childrenCount.toString() + " " + "items added"
                         extendedfab.text = itemsadded
-                    }else{
+                    } else {
                         extendedfab.hide()
                     }
                 }
@@ -151,22 +91,103 @@ class ProductsActivity : AppCompatActivity() {
             })
 
 
-                extendedfab.setOnClickListener {
+        extendedfab.setOnClickListener {
 
-                    val intent: Intent = Intent(this, CartActivity::class.java)
-                    intent.putExtra("storeid", storeid)
+            val intent: Intent = Intent(this, CartActivity::class.java)
+            intent.putExtra("storeid", storeid)
 
-                    startActivity(intent)
-                }
+            startActivity(intent)
+        }
+    }
 
+    private fun getsearchiv() {
+        searchIv = findViewById(R.id.tv_help)
+        searchIv.setOnClickListener {
+            val intent: Intent = Intent(this, SearchProductActivity::class.java)
+            intent.putExtra("storeid", storeid.toInt())
+            startActivity(intent)
+        }
+    }
+
+    private fun getintentdata() {
+        categorytype = intent.getStringExtra("categorytype").toString()
+        storeid = intent.getIntExtra("storeid", 0).toString()
+    }
+
+    private fun gettoolbar() {
+        val toolbar: Toolbar = findViewById(R.id.my_toolbar)
+        setSupportActionBar(toolbar)
+        toolbar.setTitle(categorytype)
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun getuserId() {
+        val sharedPref = getSharedPreferences("userdetails", Context.MODE_PRIVATE)
+        uid = sharedPref.getString("userid", null).toString()
+    }
+
+    private fun getrecyclerView() {
+        productArrayList = ArrayList<ProductModal>()
+        productRecyclerView = findViewById(R.id.rv_store)
+        productRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        productAdapter = ProductAdapter(this@ProductsActivity, productArrayList)
+        productRecyclerView.adapter = productAdapter
+        productRecyclerView.visibility = View.GONE
+    }
+
+    private fun setupNavigationRail() {
+        when (categorytype) {
+            "Skincare" -> {
+                getnavigationrail(
+                    "Facewash",
+                    "Cream",
+                    "Suncreen",
+                    "Bodylotion",
+                    R.drawable.facewashtype,
+                    R.drawable.creamstype,
+                    R.drawable.suncreentype,
+                    R.drawable.bodylotiontype
+                )
             }
 
+            "Aata, Rice & Dal" -> {
+                getnavigationrail(
+                    "Aata",
+                    "Rice",
+                    "Dal",
+                    "Besan & Soji",
+                    R.drawable.riceee,
+                    R.drawable.ricetype,
+                    R.drawable.daltype,
+                    R.drawable.besantype
+                )
+            }
 
+            "Dairy & Breads" -> {
+                getnavigationrail(
+                    "Breads",
+                    "Milk & Lassi",
+                    "Eggs & Curd",
+                    "Paneer",
+                    R.drawable.breadtype,
+                    R.drawable.milktype,
+                    R.drawable.eggstype,
+                    R.drawable.paneertype
+                )
+            }
+
+            else -> {
+            }
+        }
+    }
 
 
     fun firebasedata(a: String) {
 
-        databaseReference.child("stores").child(storeid).child(categorytype.lowercase().replace(" ", "")).child(a)
+        databaseReference.child("stores").child(storeid)
+            .child(categorytype.lowercase().replace(" ", "")).child(a)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -177,20 +198,8 @@ class ProductsActivity : AppCompatActivity() {
                             productArrayList.add(data!!)
                         }
                         productAdapter.notifyDataSetChanged()
-
-
-                        // shimmerFrameLayout.stopShimmer()
-                        //    shimmerFrameLayout.visibility= View.GONE
                         productRecyclerView.visibility = View.VISIBLE
 
-
-                        /*productAdapter.onItemClick = {
-                            val intent = Intent(this@ProductsActivity, StoreActivity::class.java)
-                            intent.putExtra("storeid", it.productname)
-                            startActivity(intent)
-                        }
-
-                         */
                     }
                 }
 
@@ -201,16 +210,20 @@ class ProductsActivity : AppCompatActivity() {
     }
 
 
-    fun getnavigationrail(itemone: String, itemtwo: String, itemthree: String, itemfour: String, iconone: Int, icontwo: Int, iconthree: Int, iconfour: Int,
+    fun getnavigationrail(
+        itemone: String,
+        itemtwo: String,
+        itemthree: String,
+        itemfour: String,
+        iconone: Int,
+        icontwo: Int,
+        iconthree: Int,
+        iconfour: Int,
     ) {
 
         val items = listOf(itemone, itemtwo, itemthree, itemfour)
         val icons = listOf(iconone, icontwo, iconthree, iconfour)
 
-
-
-
-        // Add items to the rail dynamically
         items.forEachIndexed { index, label ->
             val item = navigationRail.menu.add(Menu.NONE, index, Menu.NONE, label)
             item.icon = ContextCompat.getDrawable(this, icons[index])

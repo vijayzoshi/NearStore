@@ -1,4 +1,4 @@
-package com.example.nearstore
+package com.example.nearstore.UI
 
 import android.content.Context
 import android.content.Intent
@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.nearstore.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
@@ -28,22 +27,17 @@ class AddressBottomsheet : BottomSheetDialogFragment() {
     ): View? = inflater.inflate(R.layout.fragment_address_bottomsheet, container, false)
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPref = requireActivity().getSharedPreferences("userdetails", Context.MODE_PRIVATE)
         val uid = sharedPref.getString("userid", "haha")
-
         val useraddressTf = view.findViewById<TextView>(R.id.tf_address)
 
-        database.child("users").child(uid.toString()).child("myaddress")
+        database.child("users").child(uid.toString()).child("useraddress")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-
-
                     useraddressTf.setText(snapshot.getValue(String::class.java))
-
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -52,15 +46,10 @@ class AddressBottomsheet : BottomSheetDialogFragment() {
             })
 
 
-
         val confirmBtn = view.findViewById<Button>(R.id.btn_confirm)
         confirmBtn.setOnClickListener {
-
-
-           // database.child("users").child(uid.toString()).child("myaddress").setValue(useraddressTf.editText?.text.toString())
             val intent = Intent(requireContext(), EditAddressActivity::class.java)
             intent.putExtra("source", "bottomsheet")
-
             startActivity(intent)
             dismiss()
         }

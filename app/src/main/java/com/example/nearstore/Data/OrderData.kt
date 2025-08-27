@@ -12,8 +12,7 @@ data class OrderData(
     val useraddress: String = "",
     val timing: String = "Arriving in 35 min",
     val deliveryagentname: String = "",
-    val deliveryagentphone: Int = 0,
-
+    val deliveryagentphone: Int = 999999999,
     val itemsList: List<Product> = emptyList(),
     val timestamp: Long,
     val storeimage: String
